@@ -15,15 +15,18 @@ $(document).ready(function(){
 });
 var x=0;
 function backFunction(){
-    $(".doel").hide();
-    alert("hello x = " + x);
+    canvas.style("visibility", "hidden");
 
 };
 function homeFunction() {
     x = x+1;
     //window.history.pushState( ,"state"+x,"state"+x );
-    window.location= "#state"+x;
-    window.history.pushState(null,null,null);
+    //window.location= "#state"+x;
+    //window.history.pushState(null,null,null);
+
+    rect.transition()
+        .duration(1500)
+        .attr("x", function(){return parseInt(rect.style("x")) -10000});
 
 };
 function filterFunction() {
@@ -31,7 +34,7 @@ function filterFunction() {
     //window.location.reload(false);
     //window.location.href = window.location.pathname;
     //location.hash = "count:"+x;
-    window.onpo
+    canvas.style("visibility", "visible");
 
 
 

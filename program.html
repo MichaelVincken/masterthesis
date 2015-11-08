@@ -25,18 +25,12 @@
 		</form>
 	</div>
 
-	<div class= "staafdiagrammen">
-
-	</div>
+	<div class= "staafdiagrammen" id="staaftest"></div>
 
 
 
-	<div class = "kalender">
-
-	</div>
-	<div class = "kcalbar">
-
-	</div>
+	<div class = "kalender"></div>
+	<div class = "kcalbar"></div>
 </div>
 
 <div class = "snelkoppelingen">
@@ -45,21 +39,65 @@
 		<img src="http://cdn.flaticon.com/png/256/61972.png" alt="Home" onclick="homeFunction()">
 		<img src="http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Actions-edit-clear-icon.png" alt="Clear Filters" onclick="filterFunction()">
 	</div>
-
-
-
-
-</div>
-<div class = "eetlijst">
-
 </div>
 
+<div class = "eetlijst"></div>
+<div class = "doel"></div>
 
-<div class = "doel">
+<script>
+	var canvas = d3.select("#staaftest")
+			.append("svg")
+			.attr("width","100%")
+			.attr("height", "100%")
+			.attr("fill", "pink");
 
-</div>
+	 var rect =canvas.append("rect")
+			.attr("x",function (){return d3.select("svg").node().getBoundingClientRect().width - 100})
+			.attr("y", "20")
+			.attr("width","100%")
+			.attr("height","100%")
+			.attr("fill","pink");
+
+	var lineSegment= canvas.append("line")
+			.attr("x1", function(){return d3.select("#staaftest").node().getBoundingClientRect().width/20 })
+			.attr("x2", function(){return d3.select("#staaftest").node().getBoundingClientRect().width - d3.select("#staaftest").node().getBoundingClientRect().width/20 })
+			.attr("y1", function(){return d3.select("#staaftest").node().getBoundingClientRect().height-d3.select("#staaftest").node().getBoundingClientRect().height/20 })
+			.attr("y2", function(){return d3.select("#staaftest").node().getBoundingClientRect().height-d3.select("#staaftest").node().getBoundingClientRect().height/20 })
+			.attr("stroke-width", "5")
+			.attr("stroke", "black");
+
+	canvas.style("visibility", "hidden");
+
+	/*var canvas2 =d3.select("#staaftest")
+			.append("svg")
+			.attr("width","100%")
+			.attr("height", "100%")
+			.attr("fill", "pink");
+
+	canvas2.append("rect")
+			.attr("x","10")
+			.attr("y", "30")
+			.attr("width","100%")
+			.attr("height","100%")
+			.attr("fill","blue");*/
 
 
+
+
+
+	//d3.select("body").node().getBoundingClientRect().width
+
+	//selection.node().getBBox()
+
+
+
+
+
+	window.addEventListener('resize', function(event){
+		location.reload();
+	});
+
+</script>
 
 </body>
 </html>
