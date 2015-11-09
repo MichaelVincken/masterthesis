@@ -22,7 +22,7 @@ div{
 	float:left;
 	width:85%;
 	height:100%;
-	background-color:yellow;
+	/*background-color:yellow;*/
 }
 
 
@@ -38,7 +38,7 @@ div{
 
 .staafdiagrammen{
 	float:left;
-	background-color:rgb(255,0,0);
+	/*background-color:rgb(255,0,0);*/
 	width:88%;
 	height:30%;
 	

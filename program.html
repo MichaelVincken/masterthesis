@@ -6,6 +6,7 @@
 	<script src= "http://d3js.org/d3.v3.min.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
 	<script type="text/javascript" src="snelkoppelingen.js"></script>
+	<script type="text/javascript" src="staafDiagrammen.js"></script>
 
 </head>
 
@@ -45,29 +46,70 @@
 <div class = "doel"></div>
 
 <script>
+	var dataArray = [10,30];
+	var width = d3.select("#staaftest").node().getBoundingClientRect().width;
+	var height = d3.select("#staaftest").node().getBoundingClientRect().height;
+console.log(width);
+	console.log(height);
 	var canvas = d3.select("#staaftest")
 			.append("svg")
 			.attr("width","100%")
 			.attr("height", "100%")
-			.attr("fill", "pink");
+			.attr("fill", "black");
 
-	 var rect =canvas.append("rect")
-			.attr("x",function (){return d3.select("svg").node().getBoundingClientRect().width - 100})
-			.attr("y", "20")
-			.attr("width","100%")
-			.attr("height","100%")
-			.attr("fill","pink");
+
 
 	var lineSegment= canvas.append("line")
-			.attr("x1", function(){return d3.select("#staaftest").node().getBoundingClientRect().width/20 })
-			.attr("x2", function(){return d3.select("#staaftest").node().getBoundingClientRect().width - d3.select("#staaftest").node().getBoundingClientRect().width/20 })
-			.attr("y1", function(){return d3.select("#staaftest").node().getBoundingClientRect().height-d3.select("#staaftest").node().getBoundingClientRect().height/20 })
-			.attr("y2", function(){return d3.select("#staaftest").node().getBoundingClientRect().height-d3.select("#staaftest").node().getBoundingClientRect().height/20 })
-			.attr("stroke-width", "5")
+			.attr("x1", function(){return d3.select("#staaftest").node().getBoundingClientRect().width/50 })
+			.attr("x2", function(){return d3.select("#staaftest").node().getBoundingClientRect().width - d3.select("#staaftest").node().getBoundingClientRect().width/50 })
+			.attr("y1", function(){return d3.select("#staaftest").node().getBoundingClientRect().height-d3.select("#staaftest").node().getBoundingClientRect().height/5 })
+			.attr("y2", function(){return d3.select("#staaftest").node().getBoundingClientRect().height-d3.select("#staaftest").node().getBoundingClientRect().height/5 })
+			.attr("stroke-width", "2")
 			.attr("stroke", "black");
 
-	canvas.style("visibility", "hidden");
 
+
+	var scaleHeight1 = scaleHeight(dataArray);
+
+	var axis1 = d3.svg.axis()
+			.scale(scaleHeight1)
+			.orient("left")
+			.ticks(5);
+	var trans = 40;
+	console.log(trans);
+	canvas.append("g")
+			.attr("transform","translate("+trans+",0)")
+			.style({ 'stroke': 'Black', 'fill': 'none', 'stroke-width': '1.5'})
+			.call(axis1)
+			.selectAll('.tick > text').style({ 'font-size': '12px'});
+
+	canvas.append("text")
+			.attr("class","staaftekst")
+			.attr("x", function(){return 40 + d3.select("#staaftest").node().getBoundingClientRect().width/40 })
+			.attr("y", function(){return d3.select("#staaftest").node().getBoundingClientRect().height -d3.select("#staaftest").node().getBoundingClientRect().height/10})
+			.text("kcal")
+			.attr("font-size", "20px");
+
+	var staafBottomHeight = d3.select("#staaftest").node().getBoundingClientRect().height-d3.select("#staaftest").node().getBoundingClientRect().height/5;
+	var staafTopHeight =  d3.select("#staaftest").node().getBoundingClientRect().height/20;
+	var staafLength = staafBottomHeight-staafTopHeight;
+	var staaf1 =canvas.append("rect")
+			.attr("class","staafje")
+			.attr("x",function (){return 40+width/100})
+			.attr("y", ""+(staafTopHeight+(staafLength-calculateHeightOfBar(0,dataArray,staafLength)))+"")
+			.attr("width",""+width/20+"")
+			.attr("height",""+ calculateHeightOfBar(0,dataArray,staafLength)+"")
+			.attr("fill","pink");
+
+	var staaf2 =canvas.append("rect")
+			.attr("class", "staafje")
+			.attr("x",function (){return 40+width/100+0.5*width/20})
+			.attr("y", ""+(staafTopHeight+(staafLength-calculateHeightOfBar(1,dataArray,staafLength)))+"")
+			.attr("width",""+width/20+"")
+			.attr("height",""+calculateHeightOfBar(1,dataArray,staafLength)+"")
+			.attr("fill","red");
+
+	d3.selectAll(".staafje").style("x","160");
 	/*var canvas2 =d3.select("#staaftest")
 			.append("svg")
 			.attr("width","100%")
@@ -79,7 +121,19 @@
 			.attr("y", "30")
 			.attr("width","100%")
 			.attr("height","100%")
-			.attr("fill","blue");*/
+			.attr("fill","blue");
+
+
+
+
+
+	 var rect =canvas.append("rect")
+	 .attr("x",function (){return d3.select("svg").node().getBoundingClientRect().width - 100})
+	 .attr("y", "20")
+	 .attr("width","100%")
+	 .attr("height","100%")
+	 .attr("fill","pink");
+			*/
 
 
 
