@@ -13,20 +13,20 @@ $(document).ready(function(){
 
 
 });
-var x=0;
+
 function backFunction(){
-    canvas.style("visibility", "hidden");
+   // canvas.style("visibility", "hidden");
 
 };
 function homeFunction() {
-    x = x+1;
+    location.reload();
     //window.history.pushState( ,"state"+x,"state"+x );
     //window.location= "#state"+x;
     //window.history.pushState(null,null,null);
 
-    rect.transition()
-        .duration(1500)
-        .attr("x", function(){return parseInt(rect.style("x")) -10000});
+    //rect.transition()
+    //    .duration(1500)
+    //    .attr("x", function(){return parseInt(rect.style("x")) -10000});
 
 };
 function filterFunction() {
