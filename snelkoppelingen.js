@@ -8,11 +8,11 @@ $(document).ready(function(){
 
     };
 
-
-
-
-
 });
+
+
+
+
 
 function backFunction(){
    // canvas.style("visibility", "hidden");
