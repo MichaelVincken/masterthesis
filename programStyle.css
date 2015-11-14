@@ -14,9 +14,6 @@ html,body{
 
 
 }
-div{
-	
-}
 
 .motherDiv{
 	float:left;
@@ -153,9 +150,49 @@ div{
 
 }
 
+div {
+    font-family: "Helvetica Neue", Georgia, Serif;
+    font-size: 10px;
+}
+table#voedingsdagboek {
+    border-collapse: collapse;   
+}
+#voedingsdagboek td:first-child {
+    background-color: #fff;
+}
+#voedingsdagboek tr {
+    background-color: #eee;
+    border-top: 1px solid #fff;
+}
+#voedingsdagboek tr:hover {
+    background-color: Lightblue;
+}
+#voedingsdagboek td {
+    padding: 3px 5px;
+}
+#voedingsdagboek td:hover {
+    cursor: pointer;
+}
 
+#button-del {
+  border-radius: 28px;
+  color: #ffffff;
+  width: 1em;  height: 1em;
+}
 
+#button-alt {
+  border-radius: 28px;
+  color: #ffffff;
+  width: 1em;  height: 1em;
+}
 
+#button-del:hover {
+  background: red;
+}
+
+#button-alt:hover {
+  background: green;
+}
 
 
 
