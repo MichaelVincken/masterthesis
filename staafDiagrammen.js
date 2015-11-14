@@ -8,10 +8,6 @@ $(document).ready(function(){
 
     };
 
-
-
-
-
 });
 var isSelected=0;
 function selectAlgemeen(){
@@ -43,13 +39,13 @@ function selectMineralen(){
     isSelected=$('input[name="voedingswaarde"]:checked').val();
 
 }
-
+/*
 function getSize(d) {
     var bbox = d3.select(this).node().getBBox(),
         cbbox = d3.select(this).node().parentNode.getBBox(),
         scale = Math.min(cbbox.width/bbox.width, cbbox.height/bbox.height);
     d.scale = scale;
-};
+};*/
 function scaleHeight(dataArray){
 
     return d3.scale.linear()
@@ -121,28 +117,154 @@ function moveBarChartRight(){
         d3.select(this).attr("x",""+(parseFloat(d3.select(this).attr("x"))+width)+"");
 
     });
-
 };
-
-
-
-
-
 function getTransWidth(){
 
     return Math.round(width/34);
 }
 
+function drawBar(dataArray, transExtra, bottomText) {
 
-var staafBottomHeight;
-var trans;
-var axis1;
-var scaleHeight1;
-var staaf2;
-var staaf1;
-var staafTopHeight;
-var staafLength;
+    var staafBottomHeight;
+    var trans;
+    var axis1;
+    var scaleHeight1;
+    var staaf2;
+    var staaf1;
+    var staafTopHeight;
+    var staafLength;
 
+    scaleHeight1 = scaleHeight(dataArray);
+
+    axis1 = d3.svg.axis()
+        .scale(scaleHeight1)
+        .orient("left")
+        .ticks(5);
+    trans = transExtra + getTransWidth();
+    console.log(trans);
+    canvas.append("g")
+        .attr("class", "staafaxis")
+        .attr("transform", "translate(" + trans + ",0)")
+        .style({'stroke': 'Black', 'fill': 'none', 'stroke-width': '1.5'})
+        .call(axis1)
+        .selectAll('.tick > text').style({'font-size': '12px'});
+
+    canvas.append("text")
+        .attr("class", "staaftekst")
+        .attr("x", function () {
+            return trans + width / 100 + 0.5 * width / 20
+        })
+        .attr("y", function () {
+            return d3.select("#staaftest").node().getBoundingClientRect().height - d3.select("#staaftest").node().getBoundingClientRect().height / 10
+        })
+        .text(bottomText)
+        .attr("font-size", "" + getFontSize() + "")
+        .style("text-anchor", "middle");
+
+    staafBottomHeight = d3.select("#staaftest").node().getBoundingClientRect().height - d3.select("#staaftest").node().getBoundingClientRect().height / 5;
+    staafTopHeight = d3.select("#staaftest").node().getBoundingClientRect().height / 20;
+    staafLength = staafBottomHeight - staafTopHeight;
+    staaf1 = canvas.append("rect")
+        .attr("class", "staafjeZelf")
+        .attr("x", function () {
+            return trans + width / 100
+        })
+        .attr("y", "" + (staafTopHeight + (staafLength - calculateHeightOfBar(0, dataArray, staafLength))) + "")
+        .attr("width", "" + width / 20 + "")
+        .attr("height", "" + calculateHeightOfBar(0, dataArray, staafLength) + "")
+        .attr("fill", "pink");
+
+    staaf2 = canvas.append("rect")
+        .attr("class", "staafjeStandaard")
+        .attr("x", function () {
+            return trans + width / 100 + 0.5 * width / 20
+        })
+        .attr("y", "" + (staafTopHeight + (staafLength - calculateHeightOfBar(1, dataArray, staafLength))) + "")
+        .attr("width", "" + width / 20 + "")
+        .attr("height", "" + calculateHeightOfBar(1, dataArray, staafLength) + "")
+        .attr("fill", "red");
+};
+
+function drawOriginalBarChart(){
+
+    var dataArrayKcal;
+    var dataArrayKoolhydraten;
+    var dataArrayEiwitten ;
+    var dataArrayWater;
+    var dataArraySuikers ;
+    var dataArrayVetten ;
+    var dataArrayCholesterol ;
+    var dataArrayVezels ;
+
+    var dataArrayVitA ;
+    var dataArrayVitB1 ;
+    var dataArrayVitB2 ;
+    var dataArrayVitB6;
+    var dataArrayVitB11;
+    var dataArrayVitB12 ;
+    var dataArrayVitC ;
+    var dataArrayVitD ;
+
+    var dataArrayNatrium ;
+    var dataArrayKalium ;
+    var dataArrayCalcium ;
+    var dataArrayFosfor ;
+    var dataArrayIjzer ;
+    var dataArrayMagnesium ;
+    var dataArrayKoper;
+    var dataArrayZink ;
+    var trans = 0;
+    drawBar(dataArrayKcal,trans,"kcal");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayKoolhydraten,trans,"Koolhydraten (g)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayEiwitten,trans,"Eiwitten (g)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayWater,trans,"Water (g)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArraySuikers,trans,"Suikers (g)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayVetten,trans,"Vetten (g)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayCholesterol,trans,"Cholesterol (mg)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayVezels,trans,"Vezels (g)");
+    trans = width;
+    drawBar(dataArrayVitA,trans,"A (mg)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayVitB1,trans,"B1 (mg)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayVitB2,trans,"B2 (mg)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayVitB6,trans,"B6 (mg)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayVitB11,trans,"B11 (\xB5g)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayVitB12,trans,"B12 (\xB5g)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayVitC,trans,"C (mg)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayVitD,trans,"D (\xB5g)");
+    trans = 2*width;
+    drawBar(dataArrayNatrium,trans,"Natrium (mg)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayKalium,trans,"Kalium (mg)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayCalcium,trans,"Calcium (mg)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayFosfor,trans,"Fosfor (mg)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayIjzer,trans,"Ijzer (mg)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayMagnesium,trans,"Magnesium (mg)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayKoper,trans,"Koper (mg)");
+    trans = trans+width/100+1.5*width/20;
+    drawBar(dataArrayZink,trans,"Zink (mg)");
+
+};
+
+/*
 function drawOriginalBars(){
 
     scaleHeight1 = scaleHeight(dataArrayKcal);
@@ -1202,7 +1324,7 @@ function drawOriginalBars(){
         .attr("fill","orange");
 
 };
-
+*/
 function getFontSize(){
     return 13.5;
     //return Math.max(18,(width+height)/ )
