@@ -13,7 +13,8 @@
 
   <script type="text/javascript" src="snelkoppelingen.js"></script>
   <script type="text/javascript" src="staafDiagrammen.js"></script>
-  <script type="text/javascript" src="eetLijst.js"></script>
+    <script type="text/javascript" src="eetLijst.js"></script>
+  <script type="text/javascript" src="doel.js"></script>
   <script type="text/javascript" src="kalender.js"></script>
 
   <link href= "normalize.css" rel = "stylesheet"/>
@@ -156,7 +157,24 @@
 </div>
 
 
-<div class = "doel"></div>
+<div class = "doel" style="overflow-y: auto">
+    <body align="center">
+       <h3>BMI Berekenen</h3>
+       <p>
+        <label>Voer uw lengte in: </label>
+        <input type="text" id="lengte" placeholder="Lengte in centimeter" />
+      </p>
+      <p>
+        <label>Voer uw gewicht in: </label>
+        <input type="text" id="gewicht" placeholder="Gewicht in kilogram" />
+      </p>
+      <p>
+      <input type="submit" value="BEREKENEN" onclick="berekenBMI();">
+      <p>Jouw BMI is: <span style="font-size:50px" id="resultaat"></span></p>
+      <p><span style="color:pink" id="comment"></span> </p>
+      </p>
+    </body>
+</div>
 
 <script>
   var dataArrayKcal = [3000,2500];

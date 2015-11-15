@@ -223,8 +223,41 @@ table#voedingsdagboek {
   color: white; 
 }
 
+div.doel {
+    font-family: "Helvetica Neue", Georgia, Serif;
+    font-size: 16px;
+    background: none;
+}
 
+label {
+  width: 100%;
+}
 
+input {
+  width: 100%;
+}
+
+input[type=text] {
+  padding: 5px;
+  border: 2px solid pink;
+  -webkit-border-radius: 10px;
+  border-radius: 5px;
+  width: 100%;
+  
+}
+
+input[type=submit] {
+  padding: 5px 15px;
+  background: #ccc;
+  border: 0 none;
+  border-radius: 5px;
+  width: 100%;
+}
+
+input[type=submit]:hover {
+  background: pink;
+  cursor: pointer;
+}
 
 
 
