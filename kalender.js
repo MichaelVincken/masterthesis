@@ -11,7 +11,7 @@ $(function(){
     $('#kalenderDiv').datepicker({
 
         showOtherMonths: true,
-        dayNamesMin: [ 'Ma', 'Di', 'Woe', 'Don', 'Vrij', 'Zat','Zon'],
+        dayNamesMin: [ 'Ma', 'Di', 'Woe', 'Don', 'Vrij', 'Zat','Zon']
 
     });
 });
@@ -19,7 +19,7 @@ $(function(){
 
 
 function testResize (){
-    $(".kalender").css({'background': 'none'});
+    /*$(".kalender").css({'background': 'none'});
 
     $(".kalender").datepicker({
         onSelect: function(dateText, inst) {
@@ -31,5 +31,10 @@ function testResize (){
 
     });
     var test = $(".kalender").datepicker("widget");
-   console.log(test);
+   console.log(test);*/
+    $("[class*=ui-state-default]").css("background","blue");
+    $(".kalender").datepicker({
+
+
+    });
 }
