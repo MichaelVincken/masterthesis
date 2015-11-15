@@ -21,5 +21,18 @@ $(function(){
 function testResize (){
     $(".kalender").css({'background': 'none'});
 
-    $(".datepicker").width("100px");
+    $(".kalender").datepicker({
+        onSelect: function(dateText, inst) {
+
+            alert('on select triggered');
+
+
+        }
+
+    });
+    $(".kalender").datepicker({
+        onShow: function(){
+            $(".ui-datepicker").css('height', 50)
+        }
+    });
 }
