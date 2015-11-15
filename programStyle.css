@@ -150,9 +150,8 @@ html,body{
 
 }
 
-div.eetlijst {
-    font-family: "Helvetica Neue", Georgia, Serif;
-    font-size: 10px;
+div.eetLijst {
+    font-family: "Helvetica Neue", Georgia, Serif;;
 }
 table#voedingsdagboek {
     border-collapse: collapse;   
@@ -165,7 +164,7 @@ table#voedingsdagboek {
     border-top: 1px solid #fff;
 }
 #voedingsdagboek tr:hover {
-    background-color: Lightblue;
+    background-color: pink;
 }
 #voedingsdagboek td {
     padding: 3px 5px;
@@ -174,26 +173,55 @@ table#voedingsdagboek {
     cursor: pointer;
 }
 
-#button-del {
-  border-radius: 28px;
-  color: #ffffff;
-  width: 1em;  height: 1em;
+#dialog-bck{
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0,0,0, 0.5);
 }
 
-#button-alt {
-  border-radius: 28px;
-  color: #ffffff;
-  width: 1em;  height: 1em;
+#dialog{
+  position: absolute;
+  box-sizing: border-box;
+  width: 400px;
+  height: 200px;
+  background-color: white;
+  border: 3px solid black;
+  top: calc(50% - 100px);
+  left: calc(50% - 200px);
+  
 }
 
-#button-del:hover {
-  background: red;
+.dialog-buttonrow{
+  position: absolute;
+  bottom: 0;
+  box-sizing: border-box;
+  width: 100%;
 }
 
-#button-alt:hover {
-  background: green;
+.textcontainer{
+  box-sizing: border-box;
+  padding: 5px;
 }
 
+.buttoncontainer{
+  box-sizing: border-box;
+  width: 50%;
+  float: left;
+  padding: 5px;
+}
+
+.buttoncontainer button{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px;
+  border: 0;
+  background-color: #F44336;
+  color: white; 
+}
 
 
 
