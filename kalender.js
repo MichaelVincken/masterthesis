@@ -30,9 +30,6 @@ function testResize (){
         }
 
     });
-    $(".kalender").datepicker({
-        onShow: function(){
-            $(".ui-datepicker").css('height', 50)
-        }
-    });
+    var test = $(".kalender").datepicker("widget");
+   console.log(test);
 }
