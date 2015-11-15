@@ -145,7 +145,7 @@ function drawBar(dataArray, transExtra, bottomText) {
     canvas.append("g")
         .attr("class", "staafaxis")
         .attr("transform", "translate(" + trans + ",0)")
-        .style({'stroke': 'Black', 'fill': 'none', 'stroke-width': '1.5'})
+        .style({'stroke': 'Black', 'fill': 'none', 'stroke-width': '1'})
         .call(axis1)
         .selectAll('.tick > text').style({'font-size': '12px'});
 
