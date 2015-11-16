@@ -231,6 +231,15 @@ div.doel {
     background: none;
 }
 
+div.kcalbar	#xaxis .domain {
+		fill:none;
+		stroke:#000;
+	}
+
+div.kcalbar	#xaxis text, #yaxis text {
+		font-size: 10px;
+	}
+
 .eetLijst label {
   width: 100%;
 }
