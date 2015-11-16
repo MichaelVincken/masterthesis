@@ -229,15 +229,15 @@ div.doel {
     background: none;
 }
 
-label {
+.eetLijst label {
   width: 100%;
 }
 
-input {
+.eetLijst input {
   width: 100%;
 }
 
-input[type=text] {
+.eetLijst input[type=text] {
   padding: 5px;
   border: 2px solid pink;
   -webkit-border-radius: 10px;
@@ -246,7 +246,7 @@ input[type=text] {
   
 }
 
-input[type=submit] {
+.eetLijst input[type=submit] {
   padding: 5px 15px;
   background: #ccc;
   border: 0 none;
@@ -254,7 +254,7 @@ input[type=submit] {
   width: 100%;
 }
 
-input[type=submit]:hover {
+.eetLijst input[type=submit]:hover {
   background: pink;
   cursor: pointer;
 }

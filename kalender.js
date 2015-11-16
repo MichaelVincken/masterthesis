@@ -7,14 +7,16 @@ $(document).ready(function(){
 
 });
 
+
 $(function(){
-    $('#kalenderDiv').datepicker({
+    $('.kalender').datepicker({
 
         showOtherMonths: true,
-        dayNamesMin: [ 'Ma', 'Di', 'Woe', 'Don', 'Vrij', 'Zat','Zon']
+        dayNamesMin: [ 'Zon', 'Ma', 'Di', 'Woe', 'Don', 'Vrij', 'Zat']
 
     });
 });
+
 
 
 
@@ -32,9 +34,5 @@ function testResize (){
     });
     var test = $(".kalender").datepicker("widget");
    console.log(test);*/
-    $("[class*=ui-state-default]").css("background","blue");
-    $(".kalender").datepicker({
 
-
-    });
 }
