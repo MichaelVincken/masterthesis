@@ -53,7 +53,7 @@ html,body{
 
 .eetlijst{
 	float:left;
-	background-color:rgb(100,100,100);
+
 	width:15%;
 	height:75%;
 
@@ -71,7 +71,7 @@ html,body{
 
 .kcalbar{
 	float:left;
-	background-color:rgb(0,125,125);
+
 	width:100%;
 	height:15%;
 	
@@ -82,6 +82,9 @@ html,body{
 	background-color:rgb(50,50,200);
 	width:15%;
 	height:15%;
+	border-width:1px;
+	border-style:solid none none none;
+	border-color:black;
 	
 }
 .radio-voedingswaarden input[type="radio"] {
@@ -92,7 +95,7 @@ html,body{
 
 .radio-voedingswaarden label {
     display:inline-block;
-    background-color:#ddd;
+    background-color:#eee;
 	width:100%;
 	max-width:100%;
 	height:100%;
@@ -116,7 +119,7 @@ html,body{
 }
 
 .radio-voedingswaarden input[type="radio"]:checked + label {
-    background-color:#bbb;
+    background-color:#8DB600;
 }
 
 .snelkoppelingen div{
@@ -143,12 +146,12 @@ html,body{
 }
 
 .staafjeZelf{
-	fill:pink;
+	fill:#8DB600;
 
 }
 
 .staafjeStandaard{
-	fill:#E52B50;
+	fill:#008000;
 
 }
 
@@ -159,14 +162,14 @@ table#voedingsdagboek {
     border-collapse: collapse;   
 }
 #voedingsdagboek td:first-child {
-    background-color: #fff;
+    background-color: #ededed;
 }
 #voedingsdagboek tr {
-    background-color: #eee;
+    background-color: white;
     border-top: 1px solid #fff;
 }
 #voedingsdagboek tr:hover {
-    background-color: pink;
+    background-color: #8DB600;
 }
 #voedingsdagboek td {
     padding: 3px 5px;

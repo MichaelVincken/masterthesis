@@ -3,7 +3,7 @@ function drawKCal() {
 
   var waarden = [2700, 2900];
 
-  var colors = [, '#6E9985', '#7EBC89'];
+  var colors = ['#008000', '#8DB600', '#008000'];
 
   var grid = d3.range(25).map(function(i) {
     return {
