@@ -9,7 +9,14 @@ $(document).ready(function(){
 
 
 $(function(){
-    $('.kalender').datepicker({
+    $('.kalenderFrom').datepicker({
+
+        showOtherMonths: true,
+        dayNamesMin: [ 'Zon', 'Ma', 'Di', 'Woe', 'Don', 'Vrij', 'Zat'],
+
+    });
+
+    $('.kalenderTo').datepicker({
 
         showOtherMonths: true,
         dayNamesMin: [ 'Zon', 'Ma', 'Di', 'Woe', 'Don', 'Vrij', 'Zat']
@@ -34,5 +41,6 @@ function testResize (){
     });
     var test = $(".kalender").datepicker("widget");
    console.log(test);*/
+
 
 }
