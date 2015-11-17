@@ -5,7 +5,7 @@
 
   <script src= "http://d3js.org/d3.v3.min.js"></script>
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-
+  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
   <script type="text/javascript" src="resources/jqueryMin.js"></script>
   <script type="text/javascript" src="resources/jqueryUI.js"></script>
@@ -47,10 +47,10 @@
 
   <div class = "kalender" id="kalenderDiv">
 <div class = "kalenderFrom">
-  <p >From:</p>
+  <p >Van:</p>
 
 </div>
-    <div class="kalenderTo"> <p >To:</p></div>
+    <div class="kalenderTo"> <p >Tot en met:</p></div>
 
 
 
@@ -113,37 +113,6 @@
       <td>Sandwish met kaas en hesp (4 stuks)</td>
     </tr>
 
-    <tr>
-      <td colspan="2"  align="center"><b>10 NOVEMBER 2015</b></td>
-    </tr>
-    <tr onClick='createDialog(this)'>
-      <td>08u30</td>
-      <td>Cornflakes Kellogs Tresor (1 kom) </td>
-    </tr>
-    <tr onClick='createDialog(this)'>
-      <td>13u00</td>
-      <td>Rijst met kip en currysaus (1 portie)</td>
-    </tr>
-    <tr onClick='createDialog(this)'>
-      <td>19u35</td>
-      <td>Sandwish met kaas en hesp (4 stuks)</td>
-    </tr>
-
-    <tr>
-      <td colspan="2"  align="center"><b>10 NOVEMBER 2015</b></td>
-    </tr>
-    <tr onClick='createDialog(this)'>
-      <td>08u30</td>
-      <td>Cornflakes Kellogs Tresor (1 kom) </td>
-    </tr>
-    <tr onClick='createDialog(this)'>
-      <td>13u00</td>
-      <td>Rijst met kip en currysaus (1 portie)</td>
-    </tr>
-    <tr onClick='createDialog(this)'>
-      <td>19u35</td>
-      <td>Sandwish met kaas en hesp (4 stuks)</td>
-    </tr>
 
 
     <tr>
@@ -252,25 +221,7 @@
 
 
 
-  var width = d3.select("#staaftest").node().getBoundingClientRect().width;
-  var height = d3.select("#staaftest").node().getBoundingClientRect().height;
-  console.log(width);
-  console.log(height);
-  var canvas = d3.select("#staaftest")
-          .append("svg")
-          .attr("width","100%")
-          .attr("height", "100%")
-          .attr("fill", "black");
 
-
-
-  var lineSegment= canvas.append("line")
-          .attr("x1", function(){return d3.select("#staaftest").node().getBoundingClientRect().width/50 })
-          .attr("x2", function(){return d3.select("#staaftest").node().getBoundingClientRect().width - d3.select("#staaftest").node().getBoundingClientRect().width/50 })
-          .attr("y1", function(){return d3.select("#staaftest").node().getBoundingClientRect().height-d3.select("#staaftest").node().getBoundingClientRect().height/5 })
-          .attr("y2", function(){return d3.select("#staaftest").node().getBoundingClientRect().height-d3.select("#staaftest").node().getBoundingClientRect().height/5 })
-          .attr("stroke-width", "2")
-          .attr("stroke", "black");
 
 
   drawOriginalBarChart();

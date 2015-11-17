@@ -55,7 +55,7 @@ function scaleHeight(dataArray){
 
 function calculateHeightOfBar(i, dataArray, barHeight){
     var maxValue = Math.max.apply(Math,dataArray);
-    console.log(dataArray[i]);
+
     if(dataArray[i] < maxValue){
         return (barHeight * (dataArray[i]/maxValue));
     }else{
@@ -89,6 +89,18 @@ function moveBarChartLeft(){
         d3.select(this).attr("x",""+(parseFloat(d3.select(this).attr("x"))-width)+"");
 
     });
+    d3.selectAll(".staafjestandaardtekst").each(function(d,i){
+
+        d3.select(this).attr("x",""+(parseFloat(d3.select(this).attr("x"))-width)+"");
+
+    });
+
+    d3.selectAll(".staafjezelftekst").each(function(d,i){
+
+        d3.select(this).attr("x",""+(parseFloat(d3.select(this).attr("x"))-width)+"");
+
+    });
+
 
 };
 
@@ -117,6 +129,16 @@ function moveBarChartRight(){
         d3.select(this).attr("x",""+(parseFloat(d3.select(this).attr("x"))+width)+"");
 
     });
+    d3.selectAll(".staafjestandaardtekst").each(function(d,i){
+
+        d3.select(this).attr("x",""+(parseFloat(d3.select(this).attr("x"))+width)+"");
+
+    });
+    d3.selectAll(".staafjezelftekst").each(function(d,i){
+
+        d3.select(this).attr("x",""+(parseFloat(d3.select(this).attr("x"))+width)+"");
+
+    });
 };
 function getTransWidth(){
 
@@ -141,7 +163,7 @@ function drawBar(dataArray, transExtra, bottomText) {
         .orient("left")
         .ticks(5);
     trans = transExtra;
-    console.log(trans);
+
     canvas.append("g")
         .attr("class", "staafaxis")
         .attr("transform", "translate(" + trans + ",0)")
@@ -149,7 +171,7 @@ function drawBar(dataArray, transExtra, bottomText) {
         .call(axis1)
         .selectAll('.tick > text').style({'font-size': '12px'});
 
-    canvas.append("text")
+    var tekst = canvas.append("text")
         .attr("class", "staaftekst")
         .attr("x", function () {
             return trans + width / 100 + 0.5 * width / 20
@@ -161,18 +183,19 @@ function drawBar(dataArray, transExtra, bottomText) {
         .attr("font-size", "" + getFontSize() + "")
         .style("text-anchor", "middle");
 
+
+
+
+
+
+
     staafBottomHeight = d3.select("#staaftest").node().getBoundingClientRect().height - d3.select("#staaftest").node().getBoundingClientRect().height / 5;
     staafTopHeight = d3.select("#staaftest").node().getBoundingClientRect().height / 20;
     staafLength = staafBottomHeight - staafTopHeight;
-    staaf1 = canvas.append("rect")
-        .attr("class", "staafjeZelf")
-        .attr("x", function () {
-            return trans + width / 100
-        })
-        .attr("y", "" + (staafTopHeight + (staafLength - calculateHeightOfBar(0, dataArray, staafLength))) + "")
-        .attr("width", "" + width / 20 + "")
-        .attr("height", "" + calculateHeightOfBar(0, dataArray, staafLength) + "")
-        .attr("fill", "pink");
+
+
+
+
 
     staaf2 = canvas.append("rect")
         .attr("class", "staafjeStandaard")
@@ -183,9 +206,70 @@ function drawBar(dataArray, transExtra, bottomText) {
         .attr("width", "" + width / 20 + "")
         .attr("height", "" + calculateHeightOfBar(1, dataArray, staafLength) + "")
         .attr("fill", "red");
-};
 
+
+    staaf1 = canvas.append("rect")
+        .attr("class", "staafjeZelf")
+        .attr("x", function () {
+            return trans + width / 100
+        })
+        .attr("y", "" + (staafTopHeight + (staafLength - calculateHeightOfBar(0, dataArray, staafLength))) + "")
+        .attr("width", "" + width / 20 + "")
+        .attr("height", "" + calculateHeightOfBar(0, dataArray, staafLength) + "")
+        .attr("fill", "pink");
+
+    canvas.append("text")
+        .attr("class", "staafjezelftekst")
+        .attr("x", function () {
+            return trans + width / 100 + 0.5 * width / 20;
+        })
+        .attr("y", "" + (staafTopHeight + (staafLength - calculateHeightOfBar(0, dataArray, staafLength)) +getFontSize()) + "")
+        .text(dataArray[0])
+        .attr("font-size", "" + getFontSize() + "")
+        .style("text-anchor","middle")
+        .attr("fill","white")
+        .style("visibility","hidden");
+
+    canvas.append("text")
+        .attr("class", "staafjestandaardtekst")
+        .attr("x", function () {
+            return trans + width / 100 + 1 * width / 20;
+        })
+        .attr("y", "" + (staafTopHeight + (staafLength - calculateHeightOfBar(1, dataArray, staafLength)) +getFontSize()) + "")
+        .text(dataArray[1])
+        .attr("font-size", "" + getFontSize() + "")
+        .style("text-anchor","left")
+        .attr("fill","white")
+        .style("visibility","hidden");
+
+
+};
+var width;
+var height;
+var canvas;
+var lineSegment;
 function drawOriginalBarChart(){
+    d3.select("#staaftest").selectAll("*").remove();
+    
+    width= d3.select("#staaftest").node().getBoundingClientRect().width;
+    height = d3.select("#staaftest").node().getBoundingClientRect().height;
+
+    canvas = d3.select("#staaftest")
+        .append("svg")
+        .attr("width","100%")
+        .attr("height", "100%")
+        .attr("fill", "black");
+
+
+
+    lineSegment= canvas.append("line")
+        .attr("x1", function(){return d3.select("#staaftest").node().getBoundingClientRect().width/50 })
+        .attr("x2", function(){return d3.select("#staaftest").node().getBoundingClientRect().width - d3.select("#staaftest").node().getBoundingClientRect().width/50 })
+        .attr("y1", function(){return d3.select("#staaftest").node().getBoundingClientRect().height-d3.select("#staaftest").node().getBoundingClientRect().height/5 })
+        .attr("y2", function(){return d3.select("#staaftest").node().getBoundingClientRect().height-d3.select("#staaftest").node().getBoundingClientRect().height/5 })
+        .attr("stroke-width", "2")
+        .attr("stroke", "black");
+
 
     var trans = getTransWidth();
     drawBar(dataArrayKcal,trans,"kcal");
@@ -235,8 +319,75 @@ function drawOriginalBarChart(){
     drawBar(dataArrayKoper,trans,"Koper (mg)");
     trans = trans+width/100+1.5*width/20 + getTransWidth();
     drawBar(dataArrayZink,trans,"Zink (mg)");
+    appendHoverFunctionality();
 
+    if(document.getElementById("voed2").checked){
+        isSelected=0;
+        $('#voed1').attr("checked","true");
+        selectVitamines();
+    }
+    if(document.getElementById("voed3").checked){
+        isSelected=0;
+        $('#voed1').attr("checked","true");
+        selectMineralen();
+    }
 };
+
+function appendHoverFunctionality(){
+
+
+    d3.selectAll(".staafjeZelf").each(function(d,i){
+
+        d3.select(this).on("mouseover", function(k)
+            {
+                d3.selectAll(".staafjezelftekst").each(function(m,l){
+                    if (i==l ) {
+
+                        d3.select(this).style("visibility", "visible");
+                    }
+                });
+            })
+            .on("mouseout", function(d)
+            {
+                d3.selectAll(".staafjezelftekst").each(function(m,l){
+                    if (i==l ) {
+
+                        d3.select(this).style("visibility", "hidden");
+                    }
+                });
+            })
+
+    });
+
+    d3.selectAll(".staafjeStandaard").each(function(d,i){
+
+        d3.select(this).on("mouseover", function(k)
+            {
+                d3.selectAll(".staafjestandaardtekst").each(function(m,l){
+                    if (i==l ) {
+
+                        d3.select(this).style("visibility", "visible");
+                    }
+                });
+            })
+            .on("mouseout", function(d)
+            {
+                d3.selectAll(".staafjestandaardtekst").each(function(m,l){
+                    if (i==l ) {
+
+                        d3.select(this).style("visibility", "hidden");
+                    }
+                });
+            })
+
+    });
+
+
+
+
+}
+
+
 
 function getFontSize(){
     return 13.5;

@@ -118,7 +118,7 @@ html,body{
     font-size:100%;
 }
 
-.radio-voedingswaarden input[type="radio"]:checked + label {
+.radio-voedingswaarden input[type="radio"]:checked +label {
     background-color:#8DB600;
 	color:white;
 }
@@ -147,12 +147,12 @@ html,body{
 }
 
 .staafjeZelf{
-	fill:#008000;
+	fill:#8DB600;
 
 }
 
 .staafjeStandaard{
-	fill:#8DB600;
+	fill:#008000;
 
 }
 
