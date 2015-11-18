@@ -1,7 +1,7 @@
 function drawKCal() {
    var kcal = ['', 'Standaard', 'Persoonlijk'];
 
-  var waarden = [2700, 2900];
+  var waarden = [2500, 3000];
 
   var colors = ['#008000', '#8DB600', '#008000'];
 
