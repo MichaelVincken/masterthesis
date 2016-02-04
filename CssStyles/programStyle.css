@@ -1,0 +1,293 @@
+*{
+	margin:0;
+	padding:0;
+}
+
+html,body{
+	height:98%;
+	width:98%;
+	background-color:white;
+	margin-left:0.5%;
+	margin-top:0.5%;
+	margin-bottom: 0.5%;
+	margin-right: 0.5%;
+
+
+}
+
+.motherDiv{
+	float:left;
+	width:75%;
+	height:100%;
+	/*background-color:yellow;*/
+}
+
+
+.radio-voedingswaarden{
+	
+	float:left;
+
+	width:12%;
+	height:30%;
+	overflow: hidden;
+	
+}
+
+.staafdiagrammen{
+	float:left;
+	/*background-color:rgb(255,0,0);*/
+	width:88%;
+	height:30%;
+	
+}
+
+.snelkoppelingen{
+	float:left;
+	
+	width:15%;
+	height:10%;
+	
+}
+
+
+
+.eetlijst{
+	float:left;
+
+	width:25%;
+	height:75%;
+
+}
+
+.kalender{
+	float:left;
+	border-style:solid none none none;
+	border-color:black;
+	border-width: 1px ;
+	width:100%;
+	height:55%;
+
+}
+
+.kcalbar{
+	float:left;
+
+	width:100%;
+	height:15%;
+
+}
+
+.doel{
+	float:left;
+	background-color:rgb(50,50,200);
+	width:25%;
+	height:25%;
+	border-width:1px;
+	border-style:solid none none none;
+	border-color:black;
+	
+}
+.radio-voedingswaarden input[type="radio"] {
+    display:none;
+	margin-right:5%;
+	
+}
+
+.radio-voedingswaarden label {
+    display:inline-block;
+    background-color:#eee;
+	width:100%;
+	max-width:100%;
+	height:100%;
+	max-height:100%;
+	position:relative;
+	text-align:center;
+	padding-top:5%;
+	padding-bottom:5%;
+	border:none;
+	
+	
+	
+	/*
+    padding-top:13%; 
+	padding-bottom:13%;
+	padding-left:13%;
+	padding-right:13%;
+	*/
+    font-family:Arial;
+    font-size:100%;
+}
+
+.radio-voedingswaarden input[type="radio"]:checked +label {
+    background-color:#8DB600;
+	color:white;
+}
+
+.snelkoppelingen div{
+
+	margin:1% 1%;
+	width:98%;
+	height:98%;
+	max-width:98%;
+	max-height:98%;
+
+
+
+}
+
+.snelkoppelingen img{
+	background-color:white;
+
+	width:40%;
+	height:100%;
+	max-width:40%;
+	max-height:100%;
+	margin-right:1%;
+
+}
+
+.staafjeZelf{
+	fill:#8DB600;
+
+}
+
+.staafjeStandaard{
+	fill:#008000;
+
+}
+
+div.eetLijst {
+    font-family: "Helvetica Neue", Georgia, Serif;;
+}
+table#voedingsdagboek {
+    border-collapse: collapse;
+	width: 100%;
+}
+#voedingsdagboek td:first-child {
+    background-color: #ededed;
+	width: 20px;
+}
+#voedingsdagboek tr {
+    background-color: white;
+    border-top: 1px solid #fff;
+}
+#voedingsdagboek tr:hover {
+    background-color: #8DB600;
+}
+#voedingsdagboek td {
+    padding: 3px 5px;
+}
+#voedingsdagboek td:hover {
+    cursor: pointer;
+}
+
+#dialog-bck{
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0,0,0, 0.5);
+}
+
+#dialog{
+  position: absolute;
+  box-sizing: border-box;
+  width: 400px;
+  height: 200px;
+  background-color: white;
+  border: 3px solid black;
+  top: calc(50% - 100px);
+  left: calc(50% - 200px);
+  
+}
+
+.dialog-buttonrow{
+  position: absolute;
+  bottom: 0;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.textcontainer{
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.buttoncontainer{
+  box-sizing: border-box;
+  width: 50%;
+  float: left;
+  padding: 5px;
+}
+
+.buttoncontainer button{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px;
+  border: 0;
+  background-color: #F44336;
+  color: white; 
+}
+
+div.doel {
+    font-family: "Helvetica Neue", Georgia, Serif;
+    font-size: 16px;
+    background: none;
+}
+
+div.kcalbar	#xaxis .domain {
+		fill:none;
+		stroke:#000;
+	}
+
+div.kcalbar	#xaxis text, #yaxis text {
+		font-size: 10px;
+	}
+
+
+
+
+.doel input[type=submit]:hover {
+  background: #8DB600;
+	color:white;
+  cursor: pointer;
+}
+
+
+.kalenderFrom{
+	float:left;
+
+	width:50%;
+	height:100%;
+}
+.kalenderFrom p{
+	font-size: 15px;
+}
+.kalenderTo{
+	float:left;
+
+	width:50%;
+	height:100%;
+}
+.kalenderTo p{
+	font-size: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

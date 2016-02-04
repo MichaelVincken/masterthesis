@@ -58,3 +58,59 @@ function getAlternatief(row, dialog) {
     
   }
 }
+
+function makeEetLijst(data){
+  console.log(data);
+  var divX = document.getElementsByClassName("eetlijst");
+  var title = document.createElement("h1");
+  title.align = "center";
+
+  title.width = "100%";
+  title.innerHTML = "<span style='color: #8DB600;'>Eetlijst</span>";
+
+  divX[0].appendChild(title);
+  var eetTable = document.createElement("table");
+  eetTable.id = 'voedingsdagboek';
+  var x;
+  var y;
+  var previousDate = "none";
+  for (x in data){
+    var innertr = document.createElement("tr");
+
+    for (y in data[x]){
+      if (y==0){
+        if (data[x][y] !=previousDate){
+          var tr = document.createElement("tr");
+          var td = document.createElement("td");
+          td.colSpan = "2";
+          td.align = "center";
+          td.innerHTML = "<b>"+data[x][y]+"</b>";
+          tr.appendChild(td);
+          eetTable.appendChild(tr);
+          previousDate= data[x][y];
+        }else{
+
+        }
+      }else{
+
+        var td = document.createElement("td");
+        td.innerHTML = data[x][y];
+
+        innertr.appendChild(td);
+        var clickHandler = function(myrow){
+          return function(){createDialog(myrow);};
+        };
+
+        innertr.onclick = clickHandler(innertr);
+
+        eetTable.appendChild(innertr);
+      }
+      //divX[0].innerHTML="";
+      divX[0].appendChild(eetTable);
+
+    }
+
+
+  }console.log(divX);
+
+}

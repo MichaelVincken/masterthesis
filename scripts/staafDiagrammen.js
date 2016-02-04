@@ -10,6 +10,7 @@ $(document).ready(function(){
 
 });
 var isSelected=0;
+var divId = "#staaftest";
 function selectAlgemeen(){
     if(isSelected==1){
         moveBarChartRight();
@@ -50,7 +51,7 @@ function scaleHeight(dataArray){
 
     return d3.scale.linear()
         .domain([Math.min(0,Math.min.apply(Math,dataArray)),Math.max.apply(Math,dataArray)])
-        .range([ d3.select("#staaftest").node().getBoundingClientRect().height-d3.select("#staaftest").node().getBoundingClientRect().height/5,parseFloat(canvas.style("height"),10)/20]);
+        .range([ d3.select(divId).node().getBoundingClientRect().height-d3.select(divId).node().getBoundingClientRect().height/5,parseFloat(canvas.style("height"),10)/20]);
 };
 
 function calculateHeightOfBar(i, dataArray, barHeight){
@@ -177,7 +178,7 @@ function drawBar(dataArray, transExtra, bottomText) {
             return trans + width / 100 + 0.5 * width / 20
         })
         .attr("y", function () {
-            return d3.select("#staaftest").node().getBoundingClientRect().height - d3.select("#staaftest").node().getBoundingClientRect().height / 10
+            return d3.select(divId).node().getBoundingClientRect().height - d3.select(divId).node().getBoundingClientRect().height / 10
         })
         .text(bottomText)
         .attr("font-size", "" + getFontSize() + "")
@@ -189,8 +190,8 @@ function drawBar(dataArray, transExtra, bottomText) {
 
 
 
-    staafBottomHeight = d3.select("#staaftest").node().getBoundingClientRect().height - d3.select("#staaftest").node().getBoundingClientRect().height / 5;
-    staafTopHeight = d3.select("#staaftest").node().getBoundingClientRect().height / 20;
+    staafBottomHeight = d3.select(divId).node().getBoundingClientRect().height - d3.select(divId).node().getBoundingClientRect().height / 5;
+    staafTopHeight = d3.select(divId).node().getBoundingClientRect().height / 20;
     staafLength = staafBottomHeight - staafTopHeight;
 
 
@@ -228,7 +229,7 @@ function drawBar(dataArray, transExtra, bottomText) {
         .attr("font-size", "" + getFontSize() + "")
         .style("text-anchor","middle")
         .attr("fill","white")
-        .style("visibility","hidden");
+        .style("visibility","visible");
 
     canvas.append("text")
         .attr("class", "staafjestandaardtekst")
@@ -240,7 +241,7 @@ function drawBar(dataArray, transExtra, bottomText) {
         .attr("font-size", "" + getFontSize() + "")
         .style("text-anchor","left")
         .attr("fill","white")
-        .style("visibility","hidden");
+        .style("visibility","visible");
 
 
 };
@@ -249,12 +250,12 @@ var height;
 var canvas;
 var lineSegment;
 function drawOriginalBarChart(){
-    d3.select("#staaftest").selectAll("*").remove();
+    d3.select(divId).selectAll("*").remove();
     
-    width= d3.select("#staaftest").node().getBoundingClientRect().width;
-    height = d3.select("#staaftest").node().getBoundingClientRect().height;
+    width= d3.select(divId).node().getBoundingClientRect().width;
+    height = d3.select(divId).node().getBoundingClientRect().height;
 
-    canvas = d3.select("#staaftest")
+    canvas = d3.select(divId)
         .append("svg")
         .attr("width","100%")
         .attr("height", "100%")
@@ -263,10 +264,10 @@ function drawOriginalBarChart(){
 
 
     lineSegment= canvas.append("line")
-        .attr("x1", function(){return d3.select("#staaftest").node().getBoundingClientRect().width/50 })
-        .attr("x2", function(){return d3.select("#staaftest").node().getBoundingClientRect().width - d3.select("#staaftest").node().getBoundingClientRect().width/50 })
-        .attr("y1", function(){return d3.select("#staaftest").node().getBoundingClientRect().height-d3.select("#staaftest").node().getBoundingClientRect().height/5 })
-        .attr("y2", function(){return d3.select("#staaftest").node().getBoundingClientRect().height-d3.select("#staaftest").node().getBoundingClientRect().height/5 })
+        .attr("x1", function(){return d3.select(divId).node().getBoundingClientRect().width/50 })
+        .attr("x2", function(){return d3.select(divId).node().getBoundingClientRect().width - d3.select(divId).node().getBoundingClientRect().width/50 })
+        .attr("y1", function(){return d3.select(divId).node().getBoundingClientRect().height-d3.select(divId).node().getBoundingClientRect().height/5 })
+        .attr("y2", function(){return d3.select(divId).node().getBoundingClientRect().height-d3.select(divId).node().getBoundingClientRect().height/5 })
         .attr("stroke-width", "2")
         .attr("stroke", "black");
 
@@ -319,7 +320,7 @@ function drawOriginalBarChart(){
     drawBar(dataArrayKoper,trans,"Koper (mg)");
     trans = trans+width/100+1.5*width/20 + getTransWidth();
     drawBar(dataArrayZink,trans,"Zink (mg)");
-    appendHoverFunctionality();
+    //appendHoverFunctionality();
 
     if(document.getElementById("voed2").checked){
         isSelected=0;
