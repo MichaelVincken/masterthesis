@@ -61,7 +61,7 @@ function getAlternatief(row, dialog) {
 
 var previousDate = "none";
 var trID=0;
-function makeEetLijst(data, divID, titlebool){
+function makeEetLijst(data, divID, titlebool, n){
 
     var divX = document.getElementById(divID);
     /* if(titlebool) {
@@ -125,6 +125,10 @@ function makeEetLijst(data, divID, titlebool){
     function mouseHover(obj){
         obj.style("background-color","#68A8E5");
         tooltip.style("visibility", "visible");
+
+
+
+
     }
     function mouseLeave(obj){
         obj.style("background-color","white");
@@ -276,7 +280,7 @@ function draw1Day(data, day, xdata){
 
     data.forEach(function(entry,i){
         if(i==0){makeEetLijst(entry.slice(0,3),divIDEetLijst,true);}else{
-            makeEetLijst(entry.slice(0,3),divIDEetLijst,false);
+            makeEetLijst(entry.slice(0,3),divIDEetLijst,false,day);
         }
 
 

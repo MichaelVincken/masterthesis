@@ -34,6 +34,7 @@ h2{
 	height:4%;
 }
 html,body{
+	overflow-x:hidden;
 	height:98%;
 	width:99%;
 	background-color:white;
