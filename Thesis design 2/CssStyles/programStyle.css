@@ -275,7 +275,7 @@ table#voedingsdagboek {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0,0,0, 0.5);
+  background-color: rgba(0,0,0, 0.9);
 }
 
 #dialog{
@@ -288,6 +288,38 @@ table#voedingsdagboek {
   top: calc(50% - 100px);
   left: calc(50% - 200px);
   
+}
+
+#drop-it{
+	position: absolute;
+	box-sizing: border-box;
+	width: 600px;
+	height: 400px;
+	background-color: white;
+	border: 3px solid black;
+	top: calc(50% - 200px);
+	left: calc(50% - 300px);
+	padding:25px;
+
+}
+.selectClass{
+	display:inline-block;
+	vertical-align:top;
+	overflow:hidden;
+	width:100%;
+	height:100%;
+}
+.optionClass{
+	font-size: 20px;
+	width:100%;
+	height:30px;
+	border: 1px solid grey;
+	box-sizing:border-box;
+	text-align:center;
+
+}
+.optionClass:hover{
+	background-color:steelblue;
 }
 
 .dialog-buttonrow{

@@ -1,12 +1,22 @@
 /**
  * Created by Wander on 14/02/2016.
  */
-function createDialog(row){
+function createDialog(row,n){
     var dialogBck = document.createElement('div');
     dialogBck.id = 'dialog-bck';
 
+
+
+
+
+
     var dialog = document.createElement('div');
     dialog.id = 'dialog';
+
+    var clickHandler = function(bckg,dialog){
+        return function(){removeForeGround(bckg,dialog);};
+    };
+    dialogBck.onclick = clickHandler(dialogBck,dialog);
 
     var textContainer = document.createElement('div');
     textContainer.className = 'textcontainer';
@@ -23,11 +33,11 @@ function createDialog(row){
 
     var alternatiefButton = document.createElement('button');
     alternatiefButton.innerHTML = 'Alternatief';
-    alternatiefButton.onclick = getAlternatief(row, dialogBck);
+    alternatiefButton.onclick = getAlternatief(row, dialogBck,dialog,n);
 
     var verwijderButton = document.createElement('button');
     verwijderButton.innerHTML = 'Verwijder';
-    verwijderButton.onclick = getVerwijder(row, dialogBck);
+    verwijderButton.onclick = getVerwijder(row, dialogBck,dialog);
 
     buttonContainer1.appendChild(alternatiefButton);
     buttonContainer2.appendChild(verwijderButton);
@@ -38,30 +48,108 @@ function createDialog(row){
     dialog.appendChild(textContainer);
     dialog.appendChild(buttonRow);
 
-    dialogBck.appendChild(dialog);
+    //dialogBck.appendChild(dialog);
     document.body.appendChild(dialogBck);
+    document.body.appendChild(dialog);
 }
 
-function getVerwijder(row, dialog) {
+
+function removeForeGround(dialog,dia){
+    try{
+    document.body.removeChild(dialog);
+    }catch(err){
+    }
+    try{
+        document.body.removeChild(document.getElementById('drop-it'));
+    }catch(err){
+    }
+    try{
+        document.body.removeChild(dia);
+    }catch(err){
+    }
+
+
+
+}
+
+function getVerwijder(row, dialog,dia) {
     return function(){
         document.body.removeChild(dialog);
+        document.body.removeChild(dia);
         row.parentNode.removeChild(row);
 
     }
 }
 
-function getAlternatief(row, dialog) {
-    return function(){
+function processInput(options,day,dialog,divX,row){
         document.body.removeChild(dialog);
-        var myText = prompt('Vul een vervangerecht in:');
-        row.cells[1].innerHTML = myText;
+        document.body.removeChild(divX);
+        var index = 0;
+        vervangGerechten.forEach(function(entry,i){
+            if(entry[0] ==options){
+                index = i;
+            }else{
+
+            }
+        });
+
+        var prev = "none";
+    var totalindex=parseInt(row.id.slice(6,row.id.length))+1;
+    var dataRow = dataArray[totalindex];
+    var replacement =  dataRow.slice(0,2).concat(vervangGerechten[index][0]).concat(dataRow.slice(3,5)).concat(vervangGerechten[index].slice(1,9));
+
+    dataArray[totalindex] = replacement;
+    d3.select(".chart").selectAll("*").remove();
+    n=0;
+    trID=0;
+    previousDate = "none";
+    globalopmerkingenlist = [];
+    drawTotalDiary(dataArray);
+
+
+}
+
+function getAlternatief(row, dialog,dia,n) {
+    return function(){
+        var dropDownDiv = document.createElement('div');
+        dropDownDiv.id = 'drop-it';
+
+        var selection = document.createElement('select');
+        selection.size ="10";
+        selection.className = "selectClass";
+        vervangGerechten.forEach(function(entry,i){
+            var opt = document.createElement('option');
+            opt.className = "optionClass";
+            opt.value = entry[0];
+            opt.innerHTML = entry[0];
+
+
+            var clickHandler = function(optionz,n){
+                return function(){processInput(optionz,n,dialog,dropDownDiv,row);};
+            };
+            opt.onclick =clickHandler(opt.value,n);
+
+
+            selection.appendChild(opt);
+        });
+
+
+
+
+        dropDownDiv.appendChild(selection);
+
+        document.body.appendChild(dropDownDiv);
+        document.body.removeChild(dia);
+        //document.body.removeChild(dialog);
+        //var myText = prompt('Vul een vervangerecht in:');
+        //row.cells[1].innerHTML = myText;
 
     }
 }
 
 var previousDate = "none";
 var trID=0;
-function makeEetLijst(data, divID, titlebool, n){
+function makeEetLijst(data, divID, titlebool, n, datainfo){
 
     var divX = document.getElementById(divID);
     /* if(titlebool) {
@@ -80,6 +168,7 @@ function makeEetLijst(data, divID, titlebool, n){
 
     var innertr = document.createElement("tr");
     innertr.id = "trtest"+trID;
+
     for (x in data){
 
 
@@ -103,11 +192,11 @@ function makeEetLijst(data, divID, titlebool, n){
             td.innerHTML = data[x];
 
             innertr.appendChild(td);
-            var clickHandler = function(myrow){
-                return function(){createDialog(myrow);};
+            var clickHandler = function(myrow,n){
+                return function(){createDialog(myrow,n);};
             };
 
-            innertr.onclick = clickHandler(innertr);
+            innertr.onclick = clickHandler(innertr,n);
 
             eetTable.appendChild(innertr);
         }
@@ -126,13 +215,15 @@ function makeEetLijst(data, divID, titlebool, n){
         obj.style("background-color","#68A8E5");
         tooltip.style("visibility", "visible");
 
-
+        drawStackedBars(datainfo,n);
 
 
     }
     function mouseLeave(obj){
         obj.style("background-color","white");
         tooltip.style("visibility", "hidden");
+
+        removeStackedBars(n);
     }
     function showTableInfo(data, index, x,y){
         tooltip.style("top", y+"px")
@@ -140,6 +231,35 @@ function makeEetLijst(data, divID, titlebool, n){
             .text("naam:" +data[2]);//+ "\n\r"+ "Waarde:"+ vals[index]+ "\n\r"+ "D.A.H.:" + DailyDose[index] + "\n\rPercentage:" + Math.floor(percentages[index])+"%");
     }
     trID++;
+}
+
+function drawStackedBars(datainfo,n){
+
+    var divX =d3.select("#food"+n);
+    var divHeight= divX.node().getBoundingClientRect().height;
+    var divWidth = divX.node().getBoundingClientRect().width;
+    var yScale = document.getElementById("food"+n).yScale;
+    var xScale = document.getElementById("food"+n).xScale;
+
+    var values = datainfo;
+    var percentages=[];
+    values.forEach(function(entry,i){
+        percentages[i] = entry/DailyDose[i]*100;
+    });
+    d3.select("#foodSVG"+n).selectAll(".Stackedbar"+n)
+        .data(percentages)
+        .enter().append("rect")
+        .attr("fill","blue")
+        .attr("class", "Stackedbar"+n)
+        .attr("x", function(d,i) { return xScale(ShortNames[i]); })
+        .attr("y", function(d,i) { return yScale(d) +10; })
+        .attr("height", function(d) { return divHeight-30 - yScale(d); })
+        .attr("width", xScale.rangeBand());
+
+}
+
+function removeStackedBars(n){
+    d3.select("#foodSVG"+n).selectAll(".Stackedbar"+n).remove();
 }
 
 function joinArray(data){
@@ -207,7 +327,6 @@ function draw1Day(data, day, xdata){
         .attr("class", "dagchart")
         .attr("id", divIDFoodChart);
 
-
     document.getElementById(divIDFoodChart).data = data;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     xdata = xdata.slice(5,13);
@@ -231,6 +350,7 @@ function draw1Day(data, day, xdata){
         .ticks(8);
 
     barcanvas = barcanvas.append("svg")
+        .attr("id","foodSVG"+day)
         .attr("width","100%")
         .attr("height","100%");
 
@@ -248,7 +368,8 @@ function draw1Day(data, day, xdata){
         .scale(xScale)
         .orient("bottom");
 
-
+    document.getElementById(divIDFoodChart).xScale = xScale;
+    document.getElementById(divIDFoodChart).yScale = yScale;
 
     barcanvas.selectAll(".bar"+day)
         .data(percentages)
@@ -279,8 +400,8 @@ function draw1Day(data, day, xdata){
         .call(xAxis);
 
     data.forEach(function(entry,i){
-        if(i==0){makeEetLijst(entry.slice(0,3),divIDEetLijst,true);}else{
-            makeEetLijst(entry.slice(0,3),divIDEetLijst,false,day);
+        if(i==0){makeEetLijst(entry.slice(0,3),divIDEetLijst,true,day, entry.slice(5,13));}else{
+            makeEetLijst(entry.slice(0,3),divIDEetLijst,false,day,entry.slice(5,13));
         }
 
 
