@@ -5,11 +5,6 @@ function createDialog(row,n){
     var dialogBck = document.createElement('div');
     dialogBck.id = 'dialog-bck';
 
-
-
-
-
-
     var dialog = document.createElement('div');
     dialog.id = 'dialog';
 
