@@ -71,8 +71,16 @@ function getVerwijder(row, dialog,dia) {
     return function(){
         document.body.removeChild(dialog);
         document.body.removeChild(dia);
-        row.parentNode.removeChild(row);
 
+        var totalindex=parseInt(row.id.slice(6,row.id.length))+1;
+        console.log(dataArray);
+        dataArray = dataArray.slice(0,totalindex).concat(dataArray.slice(totalindex+1,dataArray.length));
+        d3.select(".chart").selectAll("*").remove();
+        n=0;
+        trID=0;
+        previousDate = "none";
+        globalopmerkingenlist = [];
+        drawTotalDiary(dataArray);
     }
 }
 
@@ -459,7 +467,7 @@ function opmerkingenFilter(){
         var currentPosition = [];
         var opmerkingenlist = [];
         var legeLijst = [];
-        for (i = 0; i < 14; i++) {
+        for (i = 0; i < n; i++) {
 
             if (document.getElementById("opmerking" + i).innerHTML === "&nbsp;") {
                 legeLijst.push(i);
@@ -477,7 +485,7 @@ function opmerkingenFilter(){
 
 function transitionDiary (opmerkingenlist){
 
-    for (i = 0; i < 14; i++) {
+    for (i = 0; i < n; i++) {
         var dag = d3.select("#dag" + i);
         var box = dag.node().getBoundingClientRect();
         var dagToGo = d3.select("#dag" + opmerkingenlist.indexOf(i));
@@ -506,7 +514,7 @@ function transitionDiary (opmerkingenlist){
 
 function resetDiary(){
 
-    for(i=0;i<14;i++) {
+    for(i=0;i<n;i++) {
         // var trans = d3.transform(d3.select("#dag"+i).attr("transform"));
 
 
@@ -525,7 +533,7 @@ function resetDiary(){
 function kcalfilter(){
     if(globalopmerkingenlist.length==0) {
         var totalIndexes = [];
-        for (i = 0; i < 14; i++) {
+        for (i = 0; i < n; i++) {
 
             var divX = document.getElementById("food" + i);
 
