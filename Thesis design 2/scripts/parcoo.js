@@ -2,7 +2,8 @@
  * Created by Wander on 1/03/2016.
  */
 
-function drawParCoo(removalList){
+function drawParCoo(removalList,replacementList){
+
     var divX = d3.select("body").append("div")
         .attr("id","parcoorddiv")
         .attr("class","parcoordss")
@@ -31,20 +32,32 @@ function drawParCoo(removalList){
 //resources/parcoo/parcoo.csv
     //resources/testCSV.csv
     d3.csv("resources/testCSV.csv", function(parcoo) {
-        console.log(parcoo);
+
         var l = removalList.length;
         for(i=0;i<l;i++){
             parcoo.splice(removalList[i],1);
             try {
-                for(k=i;k<l;k++){
-                    removalList[k+1] = removalList[k+1] - 1;
-                }
+         //       for(k=i;k<l;k++){
+           //         removalList[k+1] = removalList[k+1] - 1;
+             //   }
 
             }catch (err){}
 
         }
-
+        console.log(replacementList);
         console.log(parcoo);
+        for(i= 0;i<replacementList.length;i++){
+            parcoo[replacementList[i][0]].Maaltijd = replacementList[i][1][2];
+            parcoo[replacementList[i][0]].Kcal =replacementList[i][1][5];
+            parcoo[replacementList[i][0]].Suikers = replacementList[i][1][8];
+            parcoo[replacementList[i][0]].Vetten = replacementList[i][1][9];
+            parcoo[replacementList[i][0]].Magnesium = replacementList[i][1][11];
+            parcoo[replacementList[i][0]].Vezels = replacementList[i][1][12];
+            parcoo[replacementList[i][0]].Cholesterol = replacementList[i][1][10];
+            parcoo[replacementList[i][0]].Koolhydraten =replacementList[i][1][6];
+            parcoo[replacementList[i][0]].Eiwitten =replacementList[i][1][7];
+        }
+
         for(i=0;i<parcoo.length;i++){
             delete parcoo[i].Sport;
             delete parcoo[i].Opmerkingen;
@@ -65,27 +78,90 @@ function drawParCoo(removalList){
 
             return true;
         }));
-        console.log(dimensions)
+
     //    dimensions = dimensions.slice(0,3).concat(dimensions.slice(5,dimensions.length));
-        console.log(x);
+
         // Add grey background lines for context.
         background = svg.append("svg:g")
             .attr("class", "background")
             .selectAll("path")
             .data(parcoo)
             .enter().append("svg:path")
-            .attr("d", path);
+            .attr("d", path)
+            .attr("id",function(d,i){ return "background"+i;})
+            .on("click", function(d){return mouseClick(d3.select(this))});
 
         // Add blue foreground lines for focus.
+
         foreground = svg.append("svg:g")
             .attr("class", "foreground")
             .selectAll("path")
             .data(parcoo)
             .enter().append("svg:path")
-            .attr("d", path);
+            .attr("d", path)
+            .attr("id",function(d,i){ return "foreground"+i;})
+            .on("mouseover", function(d){return mouseHover(d3.select(this))})
+            .on("mousemove", function(d,i){return showTableInfo(d,i,(event.pageX+20),(event.pageY-45));})
+            .on("mouseout", function(){return mouseLeave(d3.select(this))})
+            .on("click", function(d){return mouseClick(d3.select(this))});
 
-        foreground.forEach(function(d,i){
-            console.log(d);
+
+        function mouseClick(path){
+            var succes = false;
+            var index = -1;
+
+
+            foreground.style("display", function (d,i) {
+                if(path.attr("id") == "foreground"+i || path.attr("id") == "background"+i  ){
+                succes = true;
+                    index = i;
+                return  null;
+            }else{
+                return "none";
+            }
+            });
+            if(succes ==false){
+                foreground.style("display", function (d,i) {
+                    return null;
+                })
+            }
+            if(index != -1){
+
+                var selectedDag = parseInt(document.getElementById("trtest"+index).parentNode.parentNode.id.slice(5,7));
+
+                highLightDays([selectedDag]);
+            }
+
+        }
+
+
+
+
+
+        function mouseHover(obj){
+            obj.style("background-color","#68A8E5");
+            tooltip.style("visibility", "visible")
+                .style("width","200px")
+                .style("height","200px");
+
+
+
+        }
+        function mouseLeave(obj){
+            obj.style("background-color","white");
+            tooltip.style("visibility", "hidden");
+
+        }
+        function showTableInfo(data, index, x,y){
+
+            tooltip.style("top", y+"px")
+                .style("left",x+"px")
+                .text("Dag:" +data.Dag+ "\n\r"+ "Uur:"+ data.Uur+ "\n\r"+ "Maaltijd.:" + data.Maaltijd + "\n\rKcal:" + data.Kcal+""+ "\n\rKoolhydraten:" + data.Koolhydraten+""+ "\n\rEiwitten:" + data.Eiwitten+""+ "\n\rSuikers:" + data.Suikers+""+ "\n\rVetten:" + data.Vetten+""+ "\n\rCholesterol:" + data.Cholesterol+""+ "\n\rMagnesium:" + data.Magnesium+""+ "\n\rVezels:" + data.Vezels+"");
+        }
+
+
+        background.forEach(function(d,i){
+
         })
 
         // Add a group element for each dimension.
@@ -168,7 +244,7 @@ function drawParCoo(removalList){
         var selectedString = selected.toString();
        //if(selectedString== "Uur" || selectedString == "Dag" || selectedString == "Maaltijd"){
        // if(Math.abs(y[selectedString].brush.extent()[0] - y[selectedString].brush.extent()[1]) <20){return;}
-
+        highLightDays([]);
            var actives = dimensions.filter(function (p) {
                    return !y[p].brush.empty();
                }),
@@ -176,9 +252,10 @@ function drawParCoo(removalList){
                    return y[p].brush.extent();
                });
            //console.log(actives);
+        var objectContainer = [];
            foreground.style("display", function (d) {
 
-               return actives.every(function (p, i) {
+              if( actives.every(function (p, i) {
                    if(actives[i] =="Uur" || actives[i] =="Dag" || actives[i] =="Maaltijd"){
                        return extents[i][0] <= y[actives[i]](d[p]) && y[actives[i]](d[p]) <= extents[i][1];
                    }else{
@@ -187,8 +264,17 @@ function drawParCoo(removalList){
                   // console.log(y[selectedString](d[p]));
                 //   console.log("extend: "+extents[i][0] )
                   // return extents[i][0] <= y[actives[i]](d[p]) && y[actives[i]](d[p]) <= extents[i][1];
-               }) ? null : "none";
+               })){
+                 objectContainer = objectContainer.concat(d3.select(this)[0]);
+                  return null;
+              }else {
+                  return "none";
+              }
            });
+        highLightDays(getAllDays(objectContainer));
+
+
+        console.log(objectContainer);
            //var chosen =  y[selectedString].domain().filter(function(d){console.log(y[selectedString](d));return (y[selectedString].brush.extent()[0] <= y[selectedString](d)) && (y[selectedString](d) <= y[selectedString].brush.extent()[1])});
 
            //console.log(chosen);
@@ -208,6 +294,42 @@ function drawParCoo(removalList){
                    return extents[i][0] <= d[p] && d[p] <= extents[i][1];
                }) ? null : "none";
            });*/
+
+    }
+
+    function getAllDays(paths){
+        var returnArray = [];
+        for(i = 0 ;i<paths.length;i++){
+            var x =parseInt(document.getElementById("trtest"+paths[i].id.slice(10,12)).parentNode.parentNode.id.slice(5,7));
+            returnArray = returnArray.concat([x]);
+        }
+
+        if(returnArray.length == 0){
+            return [-1];
+        }
+
+        return returnArray;
+    }
+
+    function highLightDays(days){
+        for(i  =0 ;i<n;i++){
+
+
+
+            if(days.indexOf(i) != -1){
+                d3.select("#dag"+i)
+                    .style("opacity", "1");
+            }else{
+                d3.select("#dag"+i)
+                    .style("opacity", "0.3");
+            }
+            if(days.length == 0){
+                d3.select("#dag"+i)
+                    .style("opacity", "1");
+            }
+
+
+        }
 
     }
 

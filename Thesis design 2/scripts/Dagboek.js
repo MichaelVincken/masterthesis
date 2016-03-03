@@ -66,24 +66,41 @@ function removeForeGround(dialog,dia){
 
 
 }
-
+var removedList = [];
 function getVerwijder(row, dialog,dia) {
     return function(){
         document.body.removeChild(dialog);
         document.body.removeChild(dia);
 
         var totalindex=parseInt(row.id.slice(6,row.id.length))+1;
-        console.log(dataArray);
+
         dataArray = dataArray.slice(0,totalindex).concat(dataArray.slice(totalindex+1,dataArray.length));
         d3.select(".chart").selectAll("*").remove();
+        d3.select(".parcoordss").selectAll("*").remove();
+        d3.select(".parcoordss").remove();
+        removedList = removedList.concat([totalindex-1]);
         n=0;
         trID=0;
         previousDate = "none";
         globalopmerkingenlist = [];
         drawTotalDiary(dataArray);
+
+
+        var l = replacementList.length;
+        for(i=0;i<l;i++){
+            try {
+                if (replacementList[i][0] > totalindex - 1) {
+                    replacementList[i][0] = replacementList[i][0] - 1;
+                } else if (replacementList[i][0] == totalindex - 1) {
+                    replacementList = replacementList.slice(0, i).concat(replacementList.slice(i + 1, replacementList.length));
+                    i--;
+                }
+            }catch(err){}
+        }
+        drawParCoo(removedList,replacementList);
     }
 }
-
+var replacementList = [];
 function processInput(options,day,dialog,divX,row){
         document.body.removeChild(dialog);
         document.body.removeChild(divX);
@@ -100,15 +117,17 @@ function processInput(options,day,dialog,divX,row){
     var totalindex=parseInt(row.id.slice(6,row.id.length))+1;
     var dataRow = dataArray[totalindex];
     var replacement =  dataRow.slice(0,2).concat(vervangGerechten[index][0]).concat(dataRow.slice(3,5)).concat(vervangGerechten[index].slice(1,9));
-
+    replacementList = replacementList.concat([[totalindex-1,replacement]]);
     dataArray[totalindex] = replacement;
     d3.select(".chart").selectAll("*").remove();
+    d3.select(".parcoordss").selectAll("*").remove();
+    d3.select(".parcoordss").remove();
     n=0;
     trID=0;
     previousDate = "none";
     globalopmerkingenlist = [];
     drawTotalDiary(dataArray);
-
+    drawParCoo(removedList,replacementList);
 
 }
 
@@ -216,7 +235,9 @@ function makeEetLijst(data, divID, titlebool, n, datainfo){
 
     function mouseHover(obj){
         obj.style("background-color","#68A8E5");
-        tooltip.style("visibility", "visible");
+        tooltip.style("visibility", "visible")
+            .style("width","auto")
+            .style("height","20px");
 
         drawStackedBars(datainfo,n);
 
@@ -231,7 +252,7 @@ function makeEetLijst(data, divID, titlebool, n, datainfo){
     function showTableInfo(data, index, x,y){
         tooltip.style("top", y+"px")
             .style("left",x+"px")
-            .text("naam:" +data[2]);//+ "\n\r"+ "Waarde:"+ vals[index]+ "\n\r"+ "D.A.H.:" + DailyDose[index] + "\n\rPercentage:" + Math.floor(percentages[index])+"%");
+            .text("Maaltijd:" +data[2]);//+ "\n\r"+ "Waarde:"+ vals[index]+ "\n\r"+ "D.A.H.:" + DailyDose[index] + "\n\rPercentage:" + Math.floor(percentages[index])+"%");
     }
     trID++;
 }
@@ -303,8 +324,6 @@ function draw1Day(data, day, xdata){
         .style("z-index", "10")
         .style("visibility", "hidden")
         .style("background-color","white")
-        .style("width","150px")
-        .style("height","100px")
         .style()
         .text("a simple tooltip");
 
@@ -390,7 +409,9 @@ function draw1Day(data, day, xdata){
 
     function mouseHover(obj){
         obj.attr("fill","#68A8E5");
-        tooltip.style("visibility", "visible");
+        tooltip.style("visibility", "visible")
+            .style("width","150px")
+            .style("height","80px");
     }
     function mouseLeave(obj){
         obj.attr("fill","lightblue");
