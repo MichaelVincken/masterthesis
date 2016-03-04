@@ -12,7 +12,7 @@
   <script type="text/javascript" src="resources/parcoords.js"></script>
 
   <script type="text/javascript" src="scripts/Dagboek.js"></script>
-  <script type="text/javascript" src="scripts/parcoo.js"></script>
+  <script type="text/javascript" src="scripts/parcoosplit.js"></script>
 
   <link href= "CssStyles/programStyle.css" rel = "stylesheet"/>
 
@@ -26,14 +26,8 @@
   <button type="button" onclick="opmerkingenFilter()">Opmerkingen!</button>
   <button type="button" onclick="kcalfilter()"> >Kcal!</button>
   <button type="button" onclick="resetDiary()">Clear Filters!</button>
-  <button type="button">Dunno!</button>
-  <button type="button">Dunno!</button>
-  <button type="button">Dunno!</button>
-  <button type="button">Dunno!</button>
-  <button type="button">Dunno!</button>
-  <button type="button">Dunno!</button>
-  <button type="button">Dunno!</button>
-  <button type="button">Dunno!</button>
+  <button type="button" onclick="toggleView()" class = "display">Display!</button>
+
 
   </div>
 
@@ -143,6 +137,7 @@ drawTotalDiary(dataArray);
 
 
 drawParCoo([],[]);
+  drawParCoo([],[]);
 
 
 

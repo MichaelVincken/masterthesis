@@ -420,6 +420,7 @@ svg {
 .foreground path {
 	fill: none;
 	stroke: steelblue;
+	stroke-width: 3;
 }
 
 .brush .extent {
@@ -460,7 +461,20 @@ svg {
 	width:100%;
 	height:100%;
 }
-
+.display{
+	visibility: hidden;
+}
+.DAH{
+	fill: none;
+	stroke: rgb(255, 113, 92);
+	stroke-width: 3;
+}
+.DAH path:hover{
+	fill: none;
+	stroke: red;
+	stroke-opacity: .7;
+	stroke-width: 4;
+}
 
 
 
