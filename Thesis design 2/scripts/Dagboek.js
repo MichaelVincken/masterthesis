@@ -363,7 +363,7 @@ function draw1Day(data, day, xdata){
     var divHeight= d3.select("#"+divIDFoodChart).node().getBoundingClientRect().height;
     var divWidth = d3.select("#"+divIDFoodChart).node().getBoundingClientRect().width;
     var yScale = d3.scale.linear()
-        .domain([0,d3.max(percentages)])
+        .domain([0,200])
         .range([divHeight-30,0 ]);
 
     var yAxis = d3.svg.axis()
@@ -406,6 +406,23 @@ function draw1Day(data, day, xdata){
         .on("mousemove", function(d,i){return showInfo(tooltip,data,i,(event.pageX+20),(event.pageY-45),values,percentages);})
         .on("mouseout", function(){return mouseLeave(d3.select(this))
         });
+
+
+    var xScale2 = d3.scale.ordinal()
+        .domain(["kcal","KH","EIW","S","VET","CH","Ma", "VEZ"])
+        .rangeRoundBands([30, divWidth-5], 0);
+    var line = d3.svg.line()
+        .x(function(d, i) {
+            return xScale2(ShortNames[i])+2*i ; })
+        //.y(function(d, i) { return (divHeight-yScale(100)-20); })
+        .y(function(d, i) { return yScale(100)+10; }) ;
+
+    barcanvas.append("path")
+        .datum(percentages)
+        .attr("class", "dagBoekLine")
+        .attr("d", line);
+
+
 
     function mouseHover(obj){
         obj.attr("fill","#68A8E5");
