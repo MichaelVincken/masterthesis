@@ -1,4 +1,4 @@
-Dag,Uur,Maaltijd,Sport,Opmerkingen,Kcal,Koolhydraten,Eiwitten,Suikers,Vetten,Cholesterol,Magnesium,Vezels
+Dag,Uur,Maaltijd,Sport,Opmerkingen,Energie (kcal),Koolhydraten (g),Eiwitten (g),Suikers (g),Vetten (g),Cholesterol (mg),Magnesium (mg),Vezels (g)
 3/2/2016,11:00 AM,Tomatensoep (1 tas),,,41,3,1,0.8,2.9,0.1,4,0.5
 3/2/2016,2:00 PM,Pizza American (Dr. Oetker),,,609,77.1,27,12,20.4,60,20,9
 3/2/2016,3:00 PM,Frambozen (75g),,,51,10.73,0.9,10.58,0.38,0,18.75,5.25
@@ -15,7 +15,7 @@ Dag,Uur,Maaltijd,Sport,Opmerkingen,Kcal,Koolhydraten,Eiwitten,Suikers,Vetten,Cho
 4/2/2016,6:00 PM,Tomatensoep (1 tas),,,41,3,1,0.8,2.9,0.1,4,0.5
 4/2/2016,8:00 PM,Donut (1 stuk),,,372,31,7,10,24.5,25,20,1
 4/2/2016,9:00 PM,Water (1L),,,0,0,0,0,0,0,1,0
-5/2/2016,11:00 AM,Tomatensoep (1 tas),,⚠ Verjaardagsfeestje Robin,41,3,1,0.8,2.9,0.1,4,0.5
+5/2/2016,11:00 AM,Tomatensoep (1 tas),,,41,3,1,0.8,2.9,0.1,4,0.5
 5/2/2016,11:00 AM,Citroen (1/2 stuk),,,18,3.25,0.25,1.5,0.2,0,5,1.1
 5/2/2016,12:30 PM,Aziatische kip met rijst en stoomgroenten,,,487,103.2,29.4,14.2,6.3,27.3,20,2.7
 5/2/2016,5:00 PM,Mandarijn (1 stuk),,,49,10.1,0.7,9.2,0.3,0,7,1.9
@@ -35,7 +35,7 @@ Dag,Uur,Maaltijd,Sport,Opmerkingen,Kcal,Koolhydraten,Eiwitten,Suikers,Vetten,Cho
 7/2/2016,6:00 PM,"Kip met gebakken aardappelen en sla, komkommer, tomaat",,,732,132.8,35.9,22.2,9.2,40,30,3.5
 7/2/2016,8:00 PM,Cola Light (33cl),,,15,0.9,0,0,0,0,0.3,0
 7/2/2016,8:00 PM,Water (1L),,,0,0,0,0,0,0,1,0
-8/2/2016,9:30 AM,Citroen (1/2 stuk),7km hardlopen,,18,3.25,0.25,1.5,0.2,0,5,1.1
+8/2/2016,9:30 AM,Citroen (1/2 stuk),,,18,3.25,0.25,1.5,0.2,0,5,1.1
 8/2/2016,12:00 PM,Gestoomde groenten,,,264,41.6,8,39.2,1.6,0,80,27.2
 8/2/2016,6:00 PM,Frieten met kippenburger (Quick),,,559,36,25.2,0,34.5,61,60,3.5
 8/2/2016,6:00 PM,Cola Light (1L),,,50,3,0,0,0,0,10,0
@@ -75,7 +75,7 @@ Dag,Uur,Maaltijd,Sport,Opmerkingen,Kcal,Koolhydraten,Eiwitten,Suikers,Vetten,Cho
 14/2/2016,7:00 PM,Cola Light (1L),,,50,3,0,0,0,0,10,0
 14/2/2016,8:00 PM,Cornflakes (100g),,,376,81.5,7.9,7.5,0.8,0,10,3.5
 14/2/2016,9:00 PM,Ice Tea Zero (66cl),,,30,1.8,0,0,0,0,0.6,0
-15/2/2016,10:00 AM,Citroen (1/2 stuk),1u zwemmen,,18,3.25,0.25,1.5,0.2,0,5,1.1
+15/2/2016,10:00 AM,Citroen (1/2 stuk),,,18,3.25,0.25,1.5,0.2,0,5,1.1
 15/2/2016,10:00 AM,Pudding (200ml),,,270,48,7.6,37.8,6.4,8,20,0
 15/2/2016,1:00 PM,Hamburger,,,272,2.5,0,21,20,60,20,0
 15/2/2016,2:00 PM,Frambozen (75g),,,51,10.73,0.9,10.58,0.38,0,18.75,5.25
@@ -90,3 +90,9 @@ Dag,Uur,Maaltijd,Sport,Opmerkingen,Kcal,Koolhydraten,Eiwitten,Suikers,Vetten,Cho
 16/2/2016,8:00 PM,Kipburger met frieten en groenten,,,283,26.5,14,1.9,13.5,40,40,0.2
 16/2/2016,8:00 PM,Ice Tea Zero (33cl),,,15,0.9,0,0,0,0,0.3,0
 16/2/2016,9:00 PM,Cola Zero (2L),,,100,6,0,0,0,0,20,0
+17/2/2016,11:00 AM,Citroen (1/2 stuk),,,18,3.25,0.25,1.5,0.2,0,5,1.1
+17/2/2016,11:00 AM,Pudding (200ml),,,270,48,7.6,37.8,6.4,8,20,0
+17/2/2016,7:00 PM,Frieten met hamburger (Quick),,,559,36,25.2,0,34.5,61,60,3.5
+17/2/2016,7:00 PM,Cola Light (1L),,,50,3,0,0,0,0,10,0
+17/2/2016,9:00 PM,Water (1L),,,0,0,0,0,0,0,1,0
+17/2/2016,9:00 PM,Ice Tea Zero (66cl),,,30,1.8,0,0,0,0,0.6,0
