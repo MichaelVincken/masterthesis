@@ -76,17 +76,17 @@ function drawParCoo(removalList,replacementList){
             delete parcoo[i].Opmerkingen;
 
         }
-        //var doseObject = {Dag:"15 FEBRUARI",Uur:"12u00",Maaltijd:"Vlees",Kcal:"3300",Koolhydraten:"340",Eiwitten:"1000",Suikers:"60",Vetten:"100",Cholesterol:"230",Magnesium:"350",Vezels:"30"};
+        var doseObject = {Dag:"15 FEBRUARI",Uur:"12u00",Maaltijd:"Vlees",Kcal:"3300",Koolhydraten:"340",Eiwitten:"1000",Suikers:"60",Vetten:"100",Cholesterol:"230",Magnesium:"350",Vezels:"30"};
         // Extract the list of dimensions and create a scale for each.
         x.domain(dimensions = d3.keys(parcoo[0]).filter(function(d) {
             if(d == "Dag" || d == "Uur" || d == "Maaltijd") {
 
                 y[d] = d3.scale.ordinal()
-                    .domain(parcoo.map(function(p) {return p[d];}))
+                    .domain([doseObject[d]].concat(parcoo.map(function(p) {return p[d];})))
                     .rangePoints([h,0]);
             }
             else {(y[d] = d3.scale.linear()
-                .domain(d3.extent(parcoo, function(p) { return parseFloat(p[d]); }))
+                .domain(d3.extent(parcoo.concat(doseObject), function(p) { return parseFloat(p[d]); }))
                 .range([h, 0]));
 
             }
@@ -123,8 +123,8 @@ function drawParCoo(removalList,replacementList){
 
 
         //var doseObject = {Dag:"15 FEBRUARI",Uur:"8u40",Maaltijd:"Vlees",Kcal:"3300",Koolhydraten:"340",Eiwitten:"60",Suikers:"60",Vetten:"100",Cholesterol:"230",Magnesium:"350",Vezels:"30"};
-        //console.log(doseObject);
-        /*console.log(parcoo[0])
+        console.log(doseObject);
+        console.log(parcoo[0])
         var dailyDose = svg.append("svg:g")
             .attr("class", "DAH")
             .selectAll("path")
@@ -134,7 +134,7 @@ function drawParCoo(removalList,replacementList){
             .on("mouseover", function(d){return mouseHover(d3.select(this))})
             .on("mousemove", function(d,i){return showTableInfo(d,i,(event.pageX+20),(event.pageY-45));})
             .on("mouseout", function(){return mouseLeave(d3.select(this))});
-*/
+
 
         function mouseClick(path){
             var succes = false;
