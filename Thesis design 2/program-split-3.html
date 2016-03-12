@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> T312 Visualization</title>
+
+  <script src= "http://d3js.org/d3.v3.min.js"></script>
+
+
+  <script type="text/javascript" src="resources/jqueryMin.js"></script>
+  <script type="text/javascript" src="resources/jqueryUI.js"></script>
+  <script type="text/javascript" src="resources/jquery-csv.js"></script>
+  <script type="text/javascript" src="resources/parcoords.js"></script>
+
+  <script type="text/javascript" src="scripts/Dagboek.js"></script>
+  <script type="text/javascript" src="scripts/parcoo.js"></script>
+
+  <link href= "CssStyles/programStyle.css" rel = "stylesheet"/>
+
+
+
+</head>
+
+<body>
+<div class = "filler"></div>
+<div class="filters"><h2> filters:</h2>
+  <button type="button" onclick="opmerkingenFilter()">Opmerkingen!</button>
+  <button type="button" onclick="kcalfilter()"> >Kcal!</button>
+  <button type="button" onclick="resetDiary()">Clear Filters!</button>
+  <button type="button" onclick="toggleView()" class = "display">Display!</button>
+
+
+  </div>
+
+<div class="chart">
+
+
+  
+</div>
+
+<script>
+
+  var dataArrayKcal = [3000,2500];
+  var dataArrayKoolhydraten = [400,340];
+  var dataArrayEiwitten = [80,60];
+  var dataArrayWater = [2500,3000];
+  var dataArraySuikers = [90,60];
+  var dataArrayVetten = [200,100];
+  var dataArrayCholesterol = [250,230];
+  var dataArrayVezels = [40,30];
+
+  var dataArrayVitA = [8,9];
+  var dataArrayVitB1 = [1.2,1.1];
+  var dataArrayVitB2 = [3.0,1.5];
+  var dataArrayVitB6 = [4.0,1.5];
+  var dataArrayVitB11 = [400,300];
+  var dataArrayVitB12 = [3.0,2.8];
+  var dataArrayVitC = [50,75];
+  var dataArrayVitD = [7,10];
+
+  var dataArrayNatrium = [3,6];
+  var dataArrayKalium = [4000,3500];
+  var dataArrayCalcium = [1050,1000];
+  var dataArrayFosfor = [550,600];
+  var dataArrayIjzer = [5,9];
+  var dataArrayMagnesium = [500,350];
+  var dataArrayKoper= [1.0,0.9];
+  var dataArrayZink = [11,9];
+
+  //Kcal,Koolhydraten,Eiwitten,Suikers,Vetten,Cholesterol,Magnesium,Vezels
+  var DailyDose = [2500,340,60,60,100,230,350,30];
+  var ShortNames= ["kcal","KH","EIW","S","VET","CH","Ma", "VEZ"];
+
+  var vervangGerechten  = [["Kroketten met varkenshaasje",965,65.3,34.9,13.1,60.3,72,60,12],
+    ["Aziatische kip met rijst en stoomgroenten",487,103.2,29.4,14.2,6.3,27.3,20,2.7],
+    ["Chipolataworst met gekookte aardappelen en spruiten",649,55.3,30.2,15.8,7.9,28.5,20,3.1],
+    ["Chocolademelk",68,12,3.5,12,0.6,2,20,2.3]];
+
+  var dataArray = (function() {
+    var data = null;
+    $.ajax({
+      'async': false,
+      'global': false,
+      'url': "resources/testCSV.csv",
+      'dataType': "text",
+      'success': function (csvd) {
+        data = $.csv.toArrays(csvd);
+
+      }
+    });
+    return data;
+  })();
+
+
+
+/*  var xScale = d3.scale.linear()
+          .domain([0, 1000])
+          .range( [50,100]);
+
+
+  d3.csv("resources/testCSV.csv", function(error, dataObject) {
+
+    console.log(dataObject);
+
+    console.log(d3.keys(dataObject[0]));
+    console.log(dataObject[1]);
+    /*
+    d3.select(".chart")
+            .selectAll("svg")
+            .data(dataArray[1])
+            .enter().append("svg")
+            .attr("fill", "red")
+            .style("width", function(d) { return xScale(d) + "px"; })
+            .text(function(d) { return d; });
+
+
+
+
+
+
+    });*/
+
+d3.select("body").insert("div",":first-child")
+        .style("width","31%")
+        .style("height","8%")
+        .attr("class","heading")
+        .style("float","left")
+        .append("h1")
+        .html("D3 Visualisation of a Patient's Food Diary");
+
+d3.select(".heading")
+        .append("p")
+        .html("Created by: Wander Bavin & Michael Vincken&nbsp");
+
+
+drawTotalDiary(dataArray);
+
+
+drawParCoo([],[]);
+  //drawParCoo([],[]);
+
+
+
+
+
+
+
+
+
+
+  window.addEventListener('resize', function(event){
+    location.reload();
+  });
+
+</script>
+
+</body>
+</html>
