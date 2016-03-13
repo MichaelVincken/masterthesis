@@ -102,6 +102,8 @@ function getVerwijder(row, dialog,dia) {
 }
 var replacementList = [];
 function processInput(options,day,dialog,divX,row){
+        d3.selectAll(".tooltip").style('visibility', "hidden");
+
         document.body.removeChild(dialog);
         document.body.removeChild(divX);
         var index = 0;
