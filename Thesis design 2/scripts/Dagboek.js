@@ -144,6 +144,23 @@ function getAlternatief(row, dialog,dia,n) {
             opt.className = "optionClass";
             opt.value = entry[0];
             opt.innerHTML = entry[0];
+            opt.onmouseover = function(){
+                tooltip.style("visibility", "visible")
+                    .style("width","auto")
+                    .style("height","auto");
+
+            };
+
+
+            opt.onmousemove = function() {
+                tooltip.style("top", (event.pageY-45)+"px")
+                    .style("left",(event.pageX+20)+"px")
+                    .text("Maaltijd.:" + vervangGerechten[i][0] + "\n\rKcal:" +vervangGerechten[i][1]+""+ "\n\rKoolhydraten:" + vervangGerechten[i][2]+""+ "\n\rEiwitten:" + vervangGerechten[i][3]+""+ "\n\rSuikers:" + vervangGerechten[i][4]+""+ "\n\rVetten:" + vervangGerechten[i][5]+""+ "\n\rCholesterol:" + vervangGerechten[i][6]+""+ "\n\rMagnesium:" + vervangGerechten[i][7]+""+ "\n\rVezels:" + vervangGerechten[i][8]+"");
+
+            };
+            opt.onmouseout = function(){
+                tooltip.style("visibility", "hidden");
+            };
 
 
             var clickHandler = function(optionz,n){
@@ -229,7 +246,7 @@ function makeEetLijst(data, divID, titlebool, n, datainfo){
     divX.appendChild(eetTable);
     d3.select("#trtest"+trID)
         .on("mouseover", function(d){return mouseHover(d3.select(this))})
-        .on("mousemove", function(d,i){return showTableInfo(data,i,(event.pageX+20),(event.pageY-45));})
+        .on("mousemove", function(d,i){return showTableInfo(data,i,(event.pageX+20),(event.pageY-45),datainfo);})
         .on("mouseout", function(){return mouseLeave(d3.select(this))
         });
 
@@ -237,7 +254,7 @@ function makeEetLijst(data, divID, titlebool, n, datainfo){
         obj.style("background-color","#68A8E5");
         tooltip.style("visibility", "visible")
             .style("width","auto")
-            .style("height","20px");
+            .style("height","auto");
 
         drawStackedBars(datainfo,n);
 
@@ -249,10 +266,13 @@ function makeEetLijst(data, divID, titlebool, n, datainfo){
 
         removeStackedBars(n);
     }
-    function showTableInfo(data, index, x,y){
+    function showTableInfo(data, index, x,y,datainfo){
+        console.log(data);
         tooltip.style("top", y+"px")
             .style("left",x+"px")
-            .text("Maaltijd:" +data[2]);//+ "\n\r"+ "Waarde:"+ vals[index]+ "\n\r"+ "D.A.H.:" + DailyDose[index] + "\n\rPercentage:" + Math.floor(percentages[index])+"%");
+            .text("Dag:" +data[0]+ "\n\r"+ "Uur:"+ data[1]+ "\n\r"+ "Maaltijd.:" + data[2] + "\n\rKcal:" + datainfo[0]+""+ "\n\rKoolhydraten:" + datainfo[1]+""+ "\n\rEiwitten:" + datainfo[2]+""+ "\n\rSuikers:" + datainfo[3]+""+ "\n\rVetten:" + datainfo[4]+""+ "\n\rCholesterol:" + datainfo[5]+""+ "\n\rMagnesium:" + datainfo[6]+""+ "\n\rVezels:" + datainfo[7]+"");
+
+        // .text("Maaltijd:" +data[2]);//+ "\n\r"+ "Waarde:"+ vals[index]+ "\n\r"+ "D.A.H.:" + DailyDose[index] + "\n\rPercentage:" + Math.floor(percentages[index])+"%");
     }
     trID++;
 }
@@ -337,14 +357,32 @@ function draw1Day(data, day, xdata){
         .attr("class", "dagfood")
         .attr("id", divIDEetLijst)
         .style("overflow-y","auto");
+console.log(data[0][3]);
+    var colah = "white";
+    if (data[0][3] != ""){
+        colah = "#ededed";
+    }
     daycanvas.append("div")
         .attr("class","dagsport")
         .attr("id",divIDSport)
-        .html("&nbsp"+data[0][3]);
+        .html("&nbsp"+data[0][3])
+        .style("background-color",colah)
+        .on("mouseover", function(d){return mouseHoverSport(d3.select(this))})
+        .on("mousemove", function(d,i){return showInfoSport(tooltip,data[0][3],i,(event.pageX+20),(event.pageY-45));})
+        .on("mouseout", function(){return mouseLeaveSport(d3.select(this))});
+    if (data[0][4] != ""){
+        colah = "#ededed";
+    }else {
+        colah = "white";
+    }
     daycanvas.append("div")
         .attr("class","dagopmerking")
         .attr("id",divIDOpmerking)
-        .html("&nbsp"+data[0][4]);
+        .html("&nbsp"+data[0][4])
+        .style("background-color",colah)
+        .on("mouseover", function(d){return mouseHoverSport(d3.select(this))})
+        .on("mousemove", function(d,i){return showInfoSport(tooltip,data[0][4],i,(event.pageX+20),(event.pageY-45));})
+        .on("mouseout", function(){return mouseLeaveSport(d3.select(this))});
     var barcanvas = daycanvas.append("div")
         .attr("class", "dagchart")
         .attr("id", divIDFoodChart);
@@ -551,7 +589,9 @@ function transitionDiary (opmerkingenlist){
 }
 
 function resetDiary(){
-
+    //d3.selectAll(".brush").each(function(d){ d3.select(this).call(y[d].brush.clear());console.log(y[d].brush.on("brush")) ;});
+    d3.selectAll(".brush").each(function(d){ d3.select(this).call(y[d].brush.clear());y[d].brush.on("brush").call(this) ;});
+   // d3.selectAll(".brush").call(this.clear());
     for(i=0;i<n;i++) {
         // var trans = d3.transform(d3.select("#dag"+i).attr("transform"));
 
@@ -616,7 +656,32 @@ function getTotalkcal(data){
 function showInfo(tooltip, data, index, x, y,vals,percentages){
     tooltip.style("top", y+"px")
         .style("left",x+"px")
-        .text("naam:" +dataArray[0][index+5]+ "\n\r"+ "Waarde:"+ vals[index]+ "\n\r"+ "D.A.H.:" + DailyDose[index] + "\n\rPercentage:" + Math.floor(percentages[index])+"%");
+        .text("naam:" +dataArray[0][index+5]+ "\n\r"+ "Waarde:"+ Math.round(vals[index])+ "\n\r"+ "D.A.H.:" + DailyDose[index] + "\n\rPercentage:" + Math.floor(percentages[index])+"%");
+    //var name = data[][index];
+    //var height = "Height: " + data[3][index] + " cm";
+    //var shoe = "Shoe Size: " + data[2][index];
+
+}
+
+////////Mouse Hover van sport en opmerkingen
+function mouseHoverSport(obj){
+
+    obj.attr("fill","#68A8E5");
+    tooltip.style("visibility", "visible")
+        .style("width","auto")
+        .style("height","auto");
+}
+function mouseLeaveSport(obj){
+    obj.attr("fill","lightblue");
+    tooltip.style("visibility", "hidden");
+}
+function showInfoSport(tooltip, data, index, x, y,vals){
+    if( data==""){
+        tooltip.style("visibility", "hidden")
+    }
+    tooltip.style("top", y+"px")
+        .style("left",x+"px")
+        .text(""+data);
     //var name = data[][index];
     //var height = "Height: " + data[3][index] + " cm";
     //var shoe = "Shoe Size: " + data[2][index];

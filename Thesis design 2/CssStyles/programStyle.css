@@ -8,8 +8,8 @@ h1{
 	text-align:center;
 }
 h2{
-	width:30%;
-	text-align:right;
+
+
 	float:left;
 }
 .heading p{
@@ -19,7 +19,7 @@ h2{
 }
 .filters{
 	float:left;
-	width:69%;
+	width:95%;
 	height:4%;
 }
 
@@ -39,7 +39,7 @@ html,body{
 	width:99%;
 	background-color:white;
 	margin-left:0.5%;
-	margin-top:0.5%;
+	margin-top:0.1%;
 	margin-bottom: 0.5%;
 	margin-right: 0.5%;
 
@@ -48,7 +48,7 @@ html,body{
 .chart {
 	float:left;
 	width:100%;
-	height:91%;
+	height:95%;
 	border-top-width: 2px;
 	border-top-style: solid;
 	border-bottom-width: 2px;
@@ -59,16 +59,17 @@ html,body{
 
 }
 .daglijst {
-	border-radius: 25px;
-	padding:10px;
+
+	padding:5px;
+	padding-bottom: 7px;
 	float:left;
-	margin-left:0.5%;
+
 	margin-top:0.5%;
-	margin-bottom: 0.5%;
+
 	margin-right: 0.5%;
 	background-color : grey;
-	width: 12%;
-	height: 45%;
+	width: 13%;
+	height: 47%;
 
 }
 .dagchart{
@@ -88,6 +89,7 @@ html,body{
 	border-top-style: solid;
 	height:5%;
 	width:100%;
+	overflow:hidden;
 }
 .dagopmerking{
 	background-color:#ededed;
@@ -97,6 +99,7 @@ html,body{
 	border-bottom-style: solid;
 	height:5%;
 	width:100%;
+	overflow:hidden;
 }
 .dagfood{
 	background-color:white;
@@ -105,150 +108,9 @@ html,body{
 
 }
 
-.motherDiv{
-	float:left;
-	width:75%;
-	height:100%;
-	/*background-color:yellow;*/
-}
-
-
-.radio-voedingswaarden{
-	
-	float:left;
-
-	width:12%;
-	height:30%;
-	overflow: hidden;
-	
-}
-
-.staafdiagrammen{
-	float:left;
-	/*background-color:rgb(255,0,0);*/
-	width:88%;
-	height:30%;
-	
-}
-
-.snelkoppelingen{
-	float:left;
-	
-	width:15%;
-	height:10%;
-	
-}
 
 
 
-.eetlijst{
-	float:left;
-
-	width:25%;
-	height:75%;
-
-}
-
-.kalender{
-	float:left;
-	border-style:solid none none none;
-	border-color:black;
-	border-width: 1px ;
-	width:100%;
-	height:55%;
-
-}
-
-.kcalbar{
-	float:left;
-
-	width:100%;
-	height:15%;
-
-}
-
-.doel{
-	float:left;
-	background-color:rgb(50,50,200);
-	width:25%;
-	height:25%;
-	border-width:1px;
-	border-style:solid none none none;
-	border-color:black;
-	
-}
-.radio-voedingswaarden input[type="radio"] {
-    display:none;
-	margin-right:5%;
-	
-}
-
-.radio-voedingswaarden label {
-    display:inline-block;
-    background-color:#eee;
-	width:100%;
-	max-width:100%;
-	height:100%;
-	max-height:100%;
-	position:relative;
-	text-align:center;
-	padding-top:5%;
-	padding-bottom:5%;
-	border:none;
-	
-	
-	
-	/*
-    padding-top:13%; 
-	padding-bottom:13%;
-	padding-left:13%;
-	padding-right:13%;
-	*/
-    font-family:Arial;
-    font-size:100%;
-}
-
-.radio-voedingswaarden input[type="radio"]:checked +label {
-    background-color:#8DB600;
-	color:white;
-}
-
-.snelkoppelingen div{
-
-	margin:1% 1%;
-	width:98%;
-	height:98%;
-	max-width:98%;
-	max-height:98%;
-
-
-
-}
-
-.snelkoppelingen img{
-	background-color:white;
-
-	width:40%;
-	height:100%;
-	max-width:40%;
-	max-height:100%;
-	margin-right:1%;
-
-}
-
-.staafjeZelf{
-	fill:#8DB600;
-
-}
-
-.staafjeStandaard{
-	fill:#008000;
-
-}
-
-div.eetLijst {
-    font-family: "Helvetica Neue", Georgia, Serif;;
-}
 table#voedingsdagboek {
     border-collapse: collapse;
 	width: 100%;
@@ -462,8 +324,20 @@ svg {
 	height:100%;
 }
 .display{
-	visibility: hidden;
+	background-color: red;
+	float:right;
+	font-weight:bold;
+	width:100px;
+	height:30px;
 }
+.clearFilter{
+
+	margin: 0px -50px;
+	position:relative;
+
+	left:35%;
+}
+
 .DAH{
 	fill: none;
 	stroke: rgb(255, 113, 92);

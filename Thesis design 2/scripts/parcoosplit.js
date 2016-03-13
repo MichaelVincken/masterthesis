@@ -6,6 +6,7 @@
  */
 
 var lol = 0;
+var y = {};
 function drawParCoo(removalList,replacementList){
 
     var divX = d3.select("body").append("div")
@@ -20,7 +21,7 @@ function drawParCoo(removalList,replacementList){
 
 
     var x = d3.scale.ordinal().rangePoints([0, w], 1),
-        y = {},
+
         dragging = {};
 
     var line = d3.svg.line().defined(function(d) { return d[1] != null; }),
@@ -162,7 +163,7 @@ function drawParCoo(removalList,replacementList){
         function mouseHover(obj){
             obj.style("background-color","#68A8E5");
             tooltip.style("visibility", "visible")
-                .style("width","200px")
+                .style("width","auto")
                 .style("height","200px");
 
 
