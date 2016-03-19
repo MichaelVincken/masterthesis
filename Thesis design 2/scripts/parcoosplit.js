@@ -7,10 +7,11 @@
 
 var lol = 0;
 var y = {};
-function drawParCoo(removalList,replacementList){
+
+function drawParCoo(removalList,replacementList, parcooid){
 
     var divX = d3.select("body").append("div")
-        .attr("id","parcoorddiv")
+
         .attr("class","parcoordss")
         ;
     //padding en canvasgrootte
@@ -31,7 +32,7 @@ function drawParCoo(removalList,replacementList){
 
 
     var svg = divX.append("svg:svg")
-        .attr("class", "parcoordSVG")
+        .attr("class", "parcoordSVG"+parcooid)
         .append("svg:g")
         .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
 //resources/parcoo/parcoo.csv
@@ -262,8 +263,8 @@ function drawParCoo(removalList,replacementList){
 
 
     // Handles a brush event, toggling the display of foreground lines.
-    function brush(selected) {
-        var selectedString = selected.toString();
+    function brush() {
+
         //if(selectedString== "Uur" || selectedString == "Dag" || selectedString == "Maaltijd"){
         // if(Math.abs(y[selectedString].brush.extent()[0] - y[selectedString].brush.extent()[1]) <20){return;}
         highLightDays([]);

@@ -7,14 +7,14 @@
 
 
 var y = {};
-var visi=false;
-function drawParCoo(removalList,replacementList){
+
+function drawParCooTotal(removalList,replacementList){
     d3.select(".display").style("visibility","visible");
     var divX = d3.select("body").append("div")
         .attr("id","parcoorddiv")
         .attr("class","parcoordss")
         .style("position", "absolute")
-        .style("z-index", "8")
+       // .style("z-index", "8")
         .style("visibility", "hidden")
         .style("background-color","white")
         .style("top",""+(d3.select(".chart").node().getBoundingClientRect().top+10)+"px")
@@ -74,19 +74,51 @@ function drawParCoo(removalList,replacementList){
         for(i=0;i<parcoo.length;i++){
             delete parcoo[i].Sport;
             delete parcoo[i].Opmerkingen;
+            delete parcoo[i].Maaltijd;
+            delete parcoo[i].Uur;
 
         }
-        //var doseObject = {Dag:"15 FEBRUARI",Uur:"12u00",Maaltijd:"Vlees",Kcal:"3300",Koolhydraten:"340",Eiwitten:"1000",Suikers:"60",Vetten:"100",Cholesterol:"230",Magnesium:"350",Vezels:"30"};
+        makeDayObjects();
+        function makeDayObjects(){
+            console.log(parcoo);
+            var date = "none";
+            var dupli = [];
+            var start = -1;
+            parcoo.forEach(function(d,i){
+                console.log(d);
+                if(d.Dag!=date){
+                    date = d.Dag;
+                    dupli.push({ Dag: d.Dag,  Kcal: d.Kcal,Koolhydraten: d.Koolhydraten,Eiwitten: d.Eiwitten,Suikers: d.Suikers,Vetten: d.Vetten,Cholesterol: d.Cholesterol,Magnesium: d.Magnesium,Vezels: d.Vezels });
+
+                }else{
+                    dupli[dupli.length-1]['Kcal'] = Math.round(parseFloat(dupli[dupli.length-1]['Kcal'])+ parseFloat(d.Kcal));
+                    dupli[dupli.length-1]['Koolhydraten'] = Math.round(parseFloat(dupli[dupli.length-1]['Koolhydraten'])+ parseFloat(d.Koolhydraten));
+                    dupli[dupli.length-1]['Eiwitten'] = Math.round(parseFloat(dupli[dupli.length-1]['Eiwitten'])+ parseFloat(d.Eiwitten));
+                    dupli[dupli.length-1]['Cholesterol'] = Math.round(parseFloat(dupli[dupli.length-1]['Cholesterol'])+ parseFloat(d.Cholesterol));
+                    dupli[dupli.length-1]['Suikers'] = Math.round(parseFloat(dupli[dupli.length-1]['Suikers'])+ parseFloat(d.Suikers));
+                    dupli[dupli.length-1]['Magnesium'] = Math.round(parseFloat(dupli[dupli.length-1]['Magnesium'])+ parseFloat(d.Magnesium));
+                    dupli[dupli.length-1]['Vezels'] = Math.round(parseFloat(dupli[dupli.length-1]['Vezels'])+ parseFloat(d.Vezels));
+                    dupli[dupli.length-1]['Vetten'] =Math.round( parseFloat(dupli[dupli.length-1]['Vetten'])+ parseFloat(d.Vetten));
+
+                }
+            })
+            console.log(dupli);
+        parcoo = dupli;
+
+        }
+
+        [2500,340,60,60,100,230,350,30];
+        var doseObject = {Kcal:"2500",Koolhydraten:"340",Eiwitten:"60",Suikers:"60",Vetten:"100",Cholesterol:"230",Magnesium:"350",Vezels:"30"};
         // Extract the list of dimensions and create a scale for each.
         x.domain(dimensions = d3.keys(parcoo[0]).filter(function(d) {
             if(d == "Dag" || d == "Uur" || d == "Maaltijd") {
 
                 y[d] = d3.scale.ordinal()
-                    .domain(parcoo.map(function(p) {return p[d];}))
+                    .domain([doseObject[d]].concat(parcoo.map(function(p) {return p[d];})))
                     .rangePoints([h,0]);
             }
             else {(y[d] = d3.scale.linear()
-                .domain(d3.extent(parcoo, function(p) { return parseFloat(p[d]); }))
+                .domain(d3.extent(parcoo.concat(doseObject), function(p) { return parseFloat(p[d]); }))
                 .range([h, 0]));
 
             }
@@ -124,7 +156,7 @@ function drawParCoo(removalList,replacementList){
 
         //var doseObject = {Dag:"15 FEBRUARI",Uur:"8u40",Maaltijd:"Vlees",Kcal:"3300",Koolhydraten:"340",Eiwitten:"60",Suikers:"60",Vetten:"100",Cholesterol:"230",Magnesium:"350",Vezels:"30"};
         //console.log(doseObject);
-        /*console.log(parcoo[0])
+        console.log(parcoo[0])
         var dailyDose = svg.append("svg:g")
             .attr("class", "DAH")
             .selectAll("path")
@@ -134,7 +166,7 @@ function drawParCoo(removalList,replacementList){
             .on("mouseover", function(d){return mouseHover(d3.select(this))})
             .on("mousemove", function(d,i){return showTableInfo(d,i,(event.pageX+20),(event.pageY-45));})
             .on("mouseout", function(){return mouseLeave(d3.select(this))});
-*/
+
 
         function mouseClick(path){
             var succes = false;
@@ -157,9 +189,9 @@ function drawParCoo(removalList,replacementList){
             }
             if(index != -1){
 
-                var selectedDag = parseInt(document.getElementById("trtest"+index).parentNode.parentNode.id.slice(5,7));
 
-                highLightDays([selectedDag]);
+
+                highLightDays([index]);
             }
 
         }
@@ -186,7 +218,7 @@ function drawParCoo(removalList,replacementList){
 
             tooltip.style("top", y+"px")
                 .style("left",x+"px")
-                .text("Dag:" +data.Dag+ "\n\r"+ "Uur:"+ data.Uur+ "\n\r"+ "Maaltijd.:" + data.Maaltijd + "\n\rKcal:" + data.Kcal+""+ "\n\rKoolhydraten:" + data.Koolhydraten+""+ "\n\rEiwitten:" + data.Eiwitten+""+ "\n\rSuikers:" + data.Suikers+""+ "\n\rVetten:" + data.Vetten+""+ "\n\rCholesterol:" + data.Cholesterol+""+ "\n\rMagnesium:" + data.Magnesium+""+ "\n\rVezels:" + data.Vezels+"");
+                .text("Dag:" +data.Dag+ "\n\r"+ "\n\rKcal:" + data.Kcal+""+ "\n\rKoolhydraten:" + data.Koolhydraten+""+ "\n\rEiwitten:" + data.Eiwitten+""+ "\n\rSuikers:" + data.Suikers+""+ "\n\rVetten:" + data.Vetten+""+ "\n\rCholesterol:" + data.Cholesterol+""+ "\n\rMagnesium:" + data.Magnesium+""+ "\n\rVezels:" + data.Vezels+"");
         }
 
 
@@ -195,10 +227,10 @@ function drawParCoo(removalList,replacementList){
             .data(dimensions)
             .enter().append("svg:g")
             .attr("class", "dimension")
-            .attr("transform", function(d) { return "translate(" + x(d) + ")"; })
+            .attr("transform", function(d) { return "translate(" + (x(d)+150) + ")"; })
             .call(d3.behavior.drag()
                 .on("dragstart", function(d) {
-                    dragging[d] = this.__origin__ = x(d);
+                    dragging[d] = this.__origin__ = ( x(d)+150);
                     // background.attr("visibility", "hidden");
                 })
                 .on("drag", function(d) {
@@ -212,7 +244,7 @@ function drawParCoo(removalList,replacementList){
                 .on("dragend", function(d) {
                     delete this.__origin__;
                     delete dragging[d];
-                    transition(d3.select(this)).attr("transform", "translate(" + x(d) + ")");
+                    transition(d3.select(this)).attr("transform", "translate(" + ( x(d)+150) + ")");
                     transition(foreground)
                         .attr("d", path);
                     background
@@ -244,7 +276,7 @@ function drawParCoo(removalList,replacementList){
 
     function position(d) {
         var v = dragging[d];
-        return v == null ? x(d) : v;
+        return v == null ? ( x(d)+150) : v;
     }
 
     function transition(g) {
@@ -258,9 +290,9 @@ function drawParCoo(removalList,replacementList){
     function path(d) {
         return line(dimensions.map(function(p) {
             // check for undefined values
-            if (d[p] == " "||d[p]=="NULL"||d[p]==null) return [x(p), null];
+            if (d[p] == " "||d[p]=="NULL"||d[p]==null) return [( x(p)+150), null];
 
-            return [x(p), y[p](d[p])];
+            return [( x(p)+150), y[p](d[p])];
         }));
     }
 
@@ -326,7 +358,7 @@ function drawParCoo(removalList,replacementList){
     function getAllDays(paths){
         var returnArray = [];
         for(i = 0 ;i<paths.length;i++){
-            var x =parseInt(document.getElementById("trtest"+paths[i].id.slice(10,12)).parentNode.parentNode.id.slice(5,7));
+            var x =parseInt(paths[i].id.slice(10,12));
             returnArray = returnArray.concat([x]);
         }
 
@@ -337,37 +369,46 @@ function drawParCoo(removalList,replacementList){
         return returnArray;
     }
 
-    function highLightDays(days){
-        for(i  =0 ;i<n;i++){
 
-
-
-            if(days.indexOf(i) != -1){
-                d3.select("#dag"+i)
-                    .style("opacity", "1");
-            }else{
-                d3.select("#dag"+i)
-                    .style("opacity", "0.3");
-            }
-            if(days.length == 0){
-                d3.select("#dag"+i)
-                    .style("opacity", "1");
-            }
-
-
-        }
-
-    }
 
 
 
 }
+var visiTotal=false;
+function toggleView2(){
 
-function toggleView(){
+    if (currentPar==1){
+        visiTotal = true;
+        d3.select(".parcoordss").style("visibility","visible").style("width","95%");
+    }else {
+        visiTotal = true;
+        currentPar = 1;
+        d3.select(".parcoordss").selectAll("*").remove();
+        d3.select(".parcoordss").remove();
+        drawParCooTotal(removedList,replacementList);
+        d3.select(".parcoordss").style("visibility","visible").style("width","95%");
+        highLightDays([]);
+    }
 
-    var visString = function(){if(!visi){return "hidden";}else{return "visible";}};
+}
+function highLightDays(days){
+    for(i  =0 ;i<n;i++){
 
-    visi = !visi;
-    d3.select(".parcoordss").style("visibility",""+visString());
+
+
+        if(days.indexOf(i) != -1){
+            d3.select("#dag"+i)
+                .style("opacity", "1");
+        }else{
+            d3.select("#dag"+i)
+                .style("opacity", "0.3");
+        }
+        if(days.length == 0){
+            d3.select("#dag"+i)
+                .style("opacity", "1");
+        }
+
+
+    }
 
 }

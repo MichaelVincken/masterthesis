@@ -11,8 +11,9 @@
   <script type="text/javascript" src="resources/jquery-csv.js"></script>
   <script type="text/javascript" src="resources/parcoords.js"></script>
 
-  <script type="text/javascript" src="scripts/Dagboek.js"></script>
-  <script type="text/javascript" src="scripts/parcoosplitview.js"></script>
+  <script type="text/javascript" src="scripts/Dagboek2.js"></script>
+  <script type="text/javascript" src="scripts/parcoosplitviewTotal.js"></script>
+  <script type="text/javascript" src="scripts/parcoosplitviewMaaltijd.js"></script>
 
   <link href= "CssStyles/programStyle.css" rel = "stylesheet"/>
 
@@ -26,8 +27,11 @@
   <button type="button" onclick="opmerkingenFilter()">Opmerkingen!</button>
   <button type="button" onclick="kcalfilter()"> >Kcal!</button>
   <button type="button" onclick="resetDiary()" class = "clearFilter">Clear Filters!</button>
-  <button type="button" onclick="toggleView()" class = "display">Parcoo!</button>
 
+  <button type="button" onclick="toggleView3()" class = "display">Maaltijden</button>
+
+  <button type="button" onclick="toggleView2()" class = "display">Dagen</button>
+  <button type="button" onclick="toggleView()" class = "display">Dagboek</button>
 
 
 
@@ -138,6 +142,7 @@ drawTotalDiary(dataArray);
 
 
 drawParCoo([],[]);
+  toggleView();
  // drawParCoo([],[],1);
 
 

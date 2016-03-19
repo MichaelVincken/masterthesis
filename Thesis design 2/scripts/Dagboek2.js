@@ -98,6 +98,7 @@ function getVerwijder(row, dialog,dia) {
             }catch(err){}
         }
         drawParCoo(removedList,replacementList);
+        toggleView();
     }
 }
 var replacementList = [];
@@ -130,6 +131,7 @@ function processInput(options,day,dialog,divX,row){
     globalopmerkingenlist = [];
     drawTotalDiary(dataArray);
     drawParCoo(removedList,replacementList);
+    toggleView();
 
 }
 
@@ -593,8 +595,7 @@ function transitionDiary (opmerkingenlist){
 function resetDiary(){
     //d3.selectAll(".brush").each(function(d){ d3.select(this).call(y[d].brush.clear());console.log(y[d].brush.on("brush")) ;});
 
-    d3.selectAll(".brush").each(function(d){ d3.select(this).call(y[d].brush.clear());y[d].brush.on("brush").call(this) ;});
-
+        d3.selectAll(".brush").each(function(d){ d3.select(this).call(y[d].brush.clear());y[d].brush.on("brush").call(this) ;});
 
 
 
@@ -696,4 +697,12 @@ function showInfoSport(tooltip, data, index, x, y,vals){
     //var height = "Height: " + data[3][index] + " cm";
     //var shoe = "Shoe Size: " + data[2][index];
 
+}
+
+var currentPar = 0;
+function toggleView(){
+
+    visiTotal = false;
+    visiMaaltijd = false;
+    d3.select(".parcoordss").style("visibility","hidden").style("width","0%");
 }
