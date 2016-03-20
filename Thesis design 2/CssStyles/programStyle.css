@@ -329,26 +329,31 @@ svg {
 	background-color: light-grey;
 	float:right;
 	//font-weight:bold;
-	width:120px;
+	width:150px;
 	height:30px;
+	font-size: 15px;
 }
 
 .clearFilter{
 
 	margin: 0px -50px;
 	position:relative;
-	width:120px;
+	width:150px;
 	height:30px;
-	left:28%;
+	left:20%;
 	background-color: light-grey;
+	font-size: 15px;
+
 }
 
 .filter{
 	background-color: light-grey;
 	float:left;
 	//font-weight:bold;
-	width:120px;
+	width:150px;
 	height:30px;
+	font-size: 15px;
+
 }
 
 .DAH{
