@@ -99,6 +99,7 @@ function getVerwijder(row, dialog,dia) {
         }
         drawParCoo(removedList,replacementList);
         toggleView();
+        currentPar=0;
     }
 }
 var replacementList = [];
@@ -132,7 +133,7 @@ function processInput(options,day,dialog,divX,row){
     drawTotalDiary(dataArray);
     drawParCoo(removedList,replacementList);
     toggleView();
-
+currentPar = 0;
 }
 
 function getAlternatief(row, dialog,dia,n) {
@@ -271,10 +272,10 @@ function makeEetLijst(data, divID, titlebool, n, datainfo){
         removeStackedBars(n);
     }
     function showTableInfo(data, index, x,y,datainfo){
-        console.log(data);
+
         tooltip.style("top", y+"px")
             .style("left",x+"px")
-            .text("Dag:" +data[0]+ "\n\r"+ "Uur:"+ data[1]+ "\n\r"+ "Maaltijd.:" + data[2] + "\n\rKcal:" + datainfo[0]+""+ "\n\rKoolhydraten:" + datainfo[1]+""+ "\n\rEiwitten:" + datainfo[2]+""+ "\n\rSuikers:" + datainfo[3]+""+ "\n\rVetten:" + datainfo[4]+""+ "\n\rCholesterol:" + datainfo[5]+""+ "\n\rMagnesium:" + datainfo[6]+""+ "\n\rVezels:" + datainfo[7]+"");
+            .text("Dag:" +data[0]+ "\n\r"+ "Uur:"+ data[1]+ "\n\r"+ "Maaltijd.:" + data[2] + "\n\rKcal:" + datainfo[0]+""+ "\n\rKoolhydraten:" + datainfo[1]+" (g)"+ "\n\rEiwitten:" + datainfo[2]+" (g)"+ "\n\rSuikers:" + datainfo[3]+" (g)"+ "\n\rVetten:" + datainfo[4]+" (g)"+ "\n\rCholesterol:" + datainfo[5]+" (mg)"+ "\n\rMagnesium:" + datainfo[6]+" (mg)"+ "\n\rVezels:" + datainfo[7]+" (g)");
 
         // .text("Maaltijd:" +data[2]);//+ "\n\r"+ "Waarde:"+ vals[index]+ "\n\r"+ "D.A.H.:" + DailyDose[index] + "\n\rPercentage:" + Math.floor(percentages[index])+"%");
     }
@@ -361,7 +362,7 @@ function draw1Day(data, day, xdata){
         .attr("class", "dagfood")
         .attr("id", divIDEetLijst)
         .style("overflow-y","auto");
-console.log(data[0][3]);
+
     var colah = "white";
     if (data[0][3] != ""){
         colah = "#ededed";
@@ -556,7 +557,7 @@ function opmerkingenFilter(){
             }
         }
         opmerkingenlist = opmerkingenlist.concat(legeLijst);
-        console.log(opmerkingenlist);
+
         transitionDiary(opmerkingenlist);
         globalopmerkingenlist=opmerkingenlist;
     }
@@ -630,7 +631,7 @@ function kcalfilter(){
             totalIndexes.push([total, i]);
 
         }
-        console.log(totalIndexes);
+
         totalIndexes.sort(sortFunction);
 
         function sortFunction(a, b) {
@@ -665,9 +666,13 @@ function getTotalkcal(data){
 
 
 function showInfo(tooltip, data, index, x, y,vals,percentages){
+    var eenheidString = " (g)";
+    if(dataArray[0][index+5]=="Cholesterol" || dataArray[0][index+5]=="Magnesium")
+        eenheidString= " (mg)";
+
     tooltip.style("top", y+"px")
         .style("left",x+"px")
-        .text("naam:" +dataArray[0][index+5]+ "\n\r"+ "Waarde:"+ Math.round(vals[index])+ "\n\r"+ "D.A.H.:" + DailyDose[index] + "\n\rPercentage:" + Math.floor(percentages[index])+"%");
+        .text("naam:" +dataArray[0][index+5]+"\n\r"+ "Waarde:"+ Math.round(vals[index])+ eenheidString+"\n\r"+ "D.A.H.:" + DailyDose[index] +eenheidString+ "\n\rPercentage:" + Math.floor(percentages[index])+"%");
     //var name = data[][index];
     //var height = "Height: " + data[3][index] + " cm";
     //var shoe = "Shoe Size: " + data[2][index];

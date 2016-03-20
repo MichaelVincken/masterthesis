@@ -57,8 +57,7 @@ function drawParCooTotal(removalList,replacementList){
             }catch (err){}
 
         }
-        console.log(replacementList);
-        console.log(parcoo);
+
         for(i= 0;i<replacementList.length;i++){
             parcoo[replacementList[i][0]].Maaltijd = replacementList[i][1][2];
             parcoo[replacementList[i][0]].Kcal =replacementList[i][1][5];
@@ -80,12 +79,12 @@ function drawParCooTotal(removalList,replacementList){
         }
         makeDayObjects();
         function makeDayObjects(){
-            console.log(parcoo);
+
             var date = "none";
             var dupli = [];
             var start = -1;
             parcoo.forEach(function(d,i){
-                console.log(d);
+
                 if(d.Dag!=date){
                     date = d.Dag;
                     dupli.push({ Dag: d.Dag,  Kcal: d.Kcal,Koolhydraten: d.Koolhydraten,Eiwitten: d.Eiwitten,Suikers: d.Suikers,Vetten: d.Vetten,Cholesterol: d.Cholesterol,Magnesium: d.Magnesium,Vezels: d.Vezels });
@@ -102,12 +101,12 @@ function drawParCooTotal(removalList,replacementList){
 
                 }
             })
-            console.log(dupli);
+
         parcoo = dupli;
 
         }
 
-        [2500,340,60,60,100,230,350,30];
+
         var doseObject = {Kcal:"2500",Koolhydraten:"340",Eiwitten:"60",Suikers:"60",Vetten:"100",Cholesterol:"230",Magnesium:"350",Vezels:"30"};
         // Extract the list of dimensions and create a scale for each.
         x.domain(dimensions = d3.keys(parcoo[0]).filter(function(d) {
@@ -156,7 +155,7 @@ function drawParCooTotal(removalList,replacementList){
 
         //var doseObject = {Dag:"15 FEBRUARI",Uur:"8u40",Maaltijd:"Vlees",Kcal:"3300",Koolhydraten:"340",Eiwitten:"60",Suikers:"60",Vetten:"100",Cholesterol:"230",Magnesium:"350",Vezels:"30"};
         //console.log(doseObject);
-        console.log(parcoo[0])
+
         var dailyDose = svg.append("svg:g")
             .attr("class", "DAH")
             .selectAll("path")
@@ -218,7 +217,7 @@ function drawParCooTotal(removalList,replacementList){
 
             tooltip.style("top", y+"px")
                 .style("left",x+"px")
-                .text("Dag:" +data.Dag+ "\n\r"+ "\n\rKcal:" + data.Kcal+""+ "\n\rKoolhydraten:" + data.Koolhydraten+""+ "\n\rEiwitten:" + data.Eiwitten+""+ "\n\rSuikers:" + data.Suikers+""+ "\n\rVetten:" + data.Vetten+""+ "\n\rCholesterol:" + data.Cholesterol+""+ "\n\rMagnesium:" + data.Magnesium+""+ "\n\rVezels:" + data.Vezels+"");
+                .text("Dag:" +data.Dag+ "\n\r"+ "\n\rKcal:" + data.Kcal+""+ "\n\rKoolhydraten:" + data.Koolhydraten+" (g)"+ "\n\rEiwitten:" + data.Eiwitten+" (g)"+ "\n\rSuikers:" + data.Suikers+" (g)"+ "\n\rVetten:" + data.Vetten+" (g)"+ "\n\rCholesterol:" + data.Cholesterol+" (mg)"+ "\n\rMagnesium:" + data.Magnesium+" (mg)"+ "\n\rVezels:" + data.Vezels+" (g)");
         }
 
 
@@ -237,6 +236,7 @@ function drawParCooTotal(removalList,replacementList){
                     dragging[d] = Math.min(w, Math.max(0, this.__origin__ += d3.event.dx));
                     foreground.attr("d", path);
                     background.attr("d", path);
+                    dailyDose.attr("d",path);
                     dimensions.sort(function(a, b) { return position(a) - position(b); });
                     x.domain(dimensions);
                     g.attr("transform", function(d) { return "translate(" + position(d) + ")"; })
@@ -252,6 +252,7 @@ function drawParCooTotal(removalList,replacementList){
                         .transition()
                         .delay(500)
                         .duration(0);
+                    dailyDose.attr("d",path);
                     //.attr("visibility", null);
                 }));
 
@@ -307,7 +308,22 @@ function drawParCooTotal(removalList,replacementList){
                 return !y[p].brush.empty();
             }),
             extents = actives.map(function (p) {
-                return y[p].brush.extent();
+                var ext;
+                var ex1;
+                var ex2;
+                try{
+                    ext = y[p].brush.y().rangeExtent()[1]-y[p].brush.y().rangeExtent()[0];
+                    ex1 = y[p].brush.y().rangeExtent()[1];
+                    ex2= y[p].brush.y().rangeExtent()[0];
+                }catch(err){
+                    ext = y[p].brush.y().domain()[1]- y[p].brush.y().domain()[0];
+                    ex1 = y[p].brush.y().domain()[1];
+                    ex2= y[p].brush.y().domain()[0]
+                }
+                if(y[p].brush.extent()[1]-y[p].brush.extent()[0]>= ext*0.03)
+                    return y[p].brush.extent();
+                else
+                    return [ex2,ex1];
             });
         //console.log(actives);
         var objectContainer = [];
@@ -332,7 +348,7 @@ function drawParCooTotal(removalList,replacementList){
         highLightDays(getAllDays(objectContainer));
 
 
-        console.log(objectContainer);
+
         //var chosen =  y[selectedString].domain().filter(function(d){console.log(y[selectedString](d));return (y[selectedString].brush.extent()[0] <= y[selectedString](d)) && (y[selectedString](d) <= y[selectedString].brush.extent()[1])});
 
         //console.log(chosen);

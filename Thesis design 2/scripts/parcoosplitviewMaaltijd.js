@@ -211,7 +211,7 @@ function drawParCoo(removalList,replacementList){
 
             tooltip.style("top", y+"px")
                 .style("left",x+"px")
-                .text("Dag:" +parcoo2[index].Dag+ "\n\r"+ "Uur:"+ parcoo2[index].Uur+ "\n\r"+ "Maaltijd.:" + data.Maaltijd + "\n\rKcal:" + data.Kcal+""+ "\n\rKoolhydraten:" + data.Koolhydraten+""+ "\n\rEiwitten:" + data.Eiwitten+""+ "\n\rSuikers:" + data.Suikers+""+ "\n\rVetten:" + data.Vetten+""+ "\n\rCholesterol:" + data.Cholesterol+""+ "\n\rMagnesium:" + data.Magnesium+""+ "\n\rVezels:" + data.Vezels+"");
+                .text("Dag:" +parcoo2[index].Dag+ "\n\r"+ "Uur:"+ parcoo2[index].Uur+ "\n\r"+ "Maaltijd.:" + data.Maaltijd + "\n\rKcal:" + data.Kcal+""+ "\n\rKoolhydraten:" + data.Koolhydraten+" (g)"+ "\n\rEiwitten:" + data.Eiwitten+" (g)"+ "\n\rSuikers:" + data.Suikers+" (g)"+ "\n\rVetten:" + data.Vetten+" (g)"+ "\n\rCholesterol:" + data.Cholesterol+" (mg)"+ "\n\rMagnesium:" + data.Magnesium+" (mg)"+ "\n\rVezels:" + data.Vezels+" (g)");
         }
 
 
@@ -230,7 +230,7 @@ function drawParCoo(removalList,replacementList){
                     dragging[d] = Math.min(w, Math.max(0, this.__origin__ += d3.event.dx));
                     foreground.attr("d", path);
                     background.attr("d", path);
-                    dimensions.sort(function(a, b) { return position(a) - position(b); });
+                    dimensions.sort(function(a, b) { return position(a) - position(b) });
                     x.domain(dimensions);
                     g.attr("transform", function(d) { return "translate(" + position(d) + ")"; })
                 })
@@ -269,6 +269,7 @@ function drawParCoo(removalList,replacementList){
     });
 
     function position(d) {
+
         var v = dragging[d];
         return v == null ? ( x(d)+150) : v;
     }
@@ -301,7 +302,22 @@ function drawParCoo(removalList,replacementList){
                 return !y[p].brush.empty();
             }),
             extents = actives.map(function (p) {
-                return y[p].brush.extent();
+                var ext;
+                var ex1;
+                var ex2;
+                try{
+                    ext = y[p].brush.y().rangeExtent()[1]-y[p].brush.y().rangeExtent()[0];
+                    ex1 = y[p].brush.y().rangeExtent()[1];
+                    ex2= y[p].brush.y().rangeExtent()[0];
+                }catch(err){
+                    ext = y[p].brush.y().domain()[1]- y[p].brush.y().domain()[0];
+                    ex1 = y[p].brush.y().domain()[1];
+                    ex2= y[p].brush.y().domain()[0]
+                }
+                if(y[p].brush.extent()[1]-y[p].brush.extent()[0]>= ext*0.03)
+                    return y[p].brush.extent();
+                else
+                    return [ex2,ex1];
             });
         //console.log(actives);
         var objectContainer = [];
@@ -326,7 +342,7 @@ function drawParCoo(removalList,replacementList){
         highLightDays(getAllDays(objectContainer));
 
 
-        console.log(objectContainer);
+
         //var chosen =  y[selectedString].domain().filter(function(d){console.log(y[selectedString](d));return (y[selectedString].brush.extent()[0] <= y[selectedString](d)) && (y[selectedString](d) <= y[selectedString].brush.extent()[1])});
 
         //console.log(chosen);
