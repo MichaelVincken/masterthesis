@@ -544,6 +544,7 @@ function drawTotalDiary(data){
 }
 var globalopmerkingenlist = [];
 function opmerkingenFilter(){
+    resetDagboekSelectie();
     if(globalopmerkingenlist==0) {
         var currentPosition = [];
         var opmerkingenlist = [];
@@ -575,7 +576,7 @@ function transitionDiary (opmerkingenlist){
         var differenceX = box2.left - box.left;
         var differenceY = box2.top - box.top;
 
-        var duration = 5000;
+        var duration = 1000;
         if (differenceX == 0 && differenceY == 0) {
             duration = 0;
         }
@@ -620,7 +621,30 @@ function resetDiary(){
 
 }
 
+function resetDagboekSelectie(inputs){
+    //d3.selectAll(".brush").each(function(d){ d3.select(this).call(y[d].brush.clear());console.log(y[d].brush.on("brush")) ;});
+    setTimeout(inputs, 50);
+    // d3.selectAll(".brush").call(this.clear());
+    for(i=0;i<n;i++) {
+        // var trans = d3.transform(d3.select("#dag"+i).attr("transform"));
+
+
+        //d3.select("#dag"+i).style("transform","translate("+(differenceX)+"px,"+(differenceY)+"px)");
+
+        d3.select("#dag"+i).transition()
+
+            //.each("start",function() { d3.select(this).style("transform","translate("+(differenceX)+"px,"+(differenceY)+"px)"); })
+            .style("transform","translate(0px,0px)");
+
+    }
+    globalopmerkingenlist=[];
+
+}
+
 function kcalfilter(){
+
+
+
     if(globalopmerkingenlist.length==0) {
         var totalIndexes = [];
         for (i = 0; i < n; i++) {

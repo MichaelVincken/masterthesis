@@ -221,33 +221,38 @@ function drawParCoo(removalList,replacementList){
             .enter().append("svg:g")
             .attr("class", "dimension")
             .attr("transform", function(d) { return "translate(" +( x(d)+150) + ")"; })
-            .call(d3.behavior.drag()
-                .on("dragstart", function(d) {
-                    dragging[d] = this.__origin__ = ( x(d)+150);
-                    // background.attr("visibility", "hidden");
-                })
-                .on("drag", function(d) {
-                    dragging[d] = Math.min(w, Math.max(0, this.__origin__ += d3.event.dx));
-                    foreground.attr("d", path);
-                    background.attr("d", path);
-                    dimensions.sort(function(a, b) { return position(a) - position(b) });
-                    x.domain(dimensions);
-                    g.attr("transform", function(d) { return "translate(" + position(d) + ")"; })
-                })
-                .on("dragend", function(d) {
-                    delete this.__origin__;
-                    delete dragging[d];
-                    transition(d3.select(this)).attr("transform", "translate(" + ( x(d)+150) + ")");
-                    transition(foreground)
-                        .attr("d", path);
-                    background
-                        .attr("d", path)
-                        .transition()
-                        .delay(500)
-                        .duration(0);
-                    //.attr("visibility", null);
-                }));
+           ;
 
+
+        /*
+
+         .call(d3.behavior.drag()
+         .on("dragstart", function(d) {
+         dragging[d] = this.__origin__ = ( x(d)+150);
+         // background.attr("visibility", "hidden");
+         })
+         .on("drag", function(d) {
+         dragging[d] = Math.min(w, Math.max(0, this.__origin__ += d3.event.dx));
+         foreground.attr("d", path);
+         background.attr("d", path);
+         dimensions.sort(function(a, b) { return position(a) - position(b) });
+         x.domain(dimensions);
+         g.attr("transform", function(d) { return "translate(" + position(d) + ")"; })
+         })
+         .on("dragend", function(d) {
+         delete this.__origin__;
+         delete dragging[d];
+         transition(d3.select(this)).attr("transform", "translate(" + ( x(d)+150) + ")");
+         transition(foreground)
+         .attr("d", path);
+         background
+         .attr("d", path)
+         .transition()
+         .delay(500)
+         .duration(0);
+         //.attr("visibility", null);
+         }))
+         */
         // Add an axis and title.
         g.append("svg:g")
             .attr("class", "axis")

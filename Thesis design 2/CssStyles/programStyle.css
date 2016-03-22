@@ -1,6 +1,7 @@
 *{
 	margin:0;
 	padding:0;
+	font-family:Arial;
 }
 h1{
 	background-color:#ededed;
@@ -21,6 +22,8 @@ h2{
 	float:left;
 	width:95%;
 	height:4%;
+	padding-top:10px;
+	padding-bottom:10px;
 }
 
 .filters button{
@@ -34,7 +37,7 @@ h2{
 	height:4%;
 }
 html,body{
-	overflow-x:hidden;
+	overflow:hidden;
 	height:98%;
 	width:99%;
 	background-color:white;
@@ -265,6 +268,7 @@ div.kcalbar	#xaxis text, #yaxis text {
 	border-style:solid;
 	border-color:black;
 	white-space:pre;
+	padding:10px;
 
 }
 
