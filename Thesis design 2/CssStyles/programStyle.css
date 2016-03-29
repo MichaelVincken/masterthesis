@@ -30,6 +30,7 @@ h2{
 	padding: 2px;
 	margin-top: 2px;
 	margin-left:5px;
+	
 }
 .filler{
 	float:left;
@@ -63,8 +64,8 @@ html,body{
 }
 .daglijst {
 
-	padding:5px;
-	padding-bottom: 7px;
+	padding:2px;
+	padding-bottom: 5px;
 	float:left;
 
 	margin-top:0.5%;
@@ -119,7 +120,7 @@ table#voedingsdagboek {
 	width: 100%;
 }
 #voedingsdagboek td:first-child {
-    background-color: #ededed;
+    background-color: white;
 	width: 20px;
 }
 #voedingsdagboek tr {
@@ -187,7 +188,7 @@ table#voedingsdagboek {
 
 }
 .optionClass:hover{
-	background-color:steelblue;
+	background-color:#ec6e8d;
 }
 
 .dialog-buttonrow{
@@ -214,7 +215,7 @@ table#voedingsdagboek {
   box-sizing: border-box;
   padding: 7px;
   border: 0;
-  background-color: #F44336;
+  background-color: #7b2397;
   color: white; 
 }
 
@@ -285,7 +286,7 @@ svg {
 
 .foreground path {
 	fill: none;
-	stroke: steelblue;
+	stroke: #5c1886;
 	stroke-width: 1.5;
 }
 
@@ -308,10 +309,13 @@ svg {
 
 .foreground path:hover {
 	fill: none;
-	stroke: blue;
+	stroke:#300c46;
 	stroke-opacity: .7;
 	stroke-width: 4;
 
+}
+.background path{
+	stroke:white;
 }
 
 .parcoordss{

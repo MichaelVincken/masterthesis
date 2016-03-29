@@ -1,6 +1,9 @@
 /**
  * Created by Wander on 14/02/2016.
  */
+
+var colahs = ["#f9c7a8", "#f39a9b", "#ec6e8d", "#d74a88", "#a93790","#7b2397", "#5c1886", "#461266"];
+
 function createDialog(row,n){
     var dialogBck = document.createElement('div');
     dialogBck.id = 'dialog-bck';
@@ -256,7 +259,7 @@ function makeEetLijst(data, divID, titlebool, n, datainfo){
         });
 
     function mouseHover(obj){
-        obj.style("background-color","#68A8E5");
+        obj.style("background-color","#ec6e8d");
         tooltip.style("visibility", "visible")
             .style("width","auto")
             .style("height","auto");
@@ -298,17 +301,25 @@ function drawStackedBars(datainfo,n){
     d3.select("#foodSVG"+n).selectAll(".Stackedbar"+n)
         .data(percentages)
         .enter().append("rect")
-        .attr("fill","blue")
+        .attr("fill",function(d,i){return ""+colahs[i];})
+        //.attr('fill',"blue")
+        .attr("opacity","1")
         .attr("class", "Stackedbar"+n)
         .attr("x", function(d,i) { return xScale(ShortNames[i]); })
         .attr("y", function(d,i) { return yScale(d) +10; })
         .attr("height", function(d) { return divHeight-30 - yScale(d); })
         .attr("width", xScale.rangeBand());
 
+    for(i=8*n;i<8*(n+1);i++){
+        d3.select("#rechthoek"+i).attr("opacity","0.5");
+    }
+
 }
 
 function removeStackedBars(n){
     d3.select("#foodSVG"+n).selectAll(".Stackedbar"+n).remove();
+
+    highlightRechthoeken();
 }
 
 function joinArray(data){
@@ -329,6 +340,7 @@ function joinArray(data){
 
 }
 var tooltip;
+var selection=[];
 function draw1Day(data, day, xdata){
     n = n+1;
     var divIDFullDay = "dag"+day;
@@ -439,15 +451,17 @@ function draw1Day(data, day, xdata){
     barcanvas.selectAll(".bar"+day)
         .data(percentages)
         .enter().append("rect")
-        .attr("fill","lightblue")
+        .attr("fill",function(d,i){return colahs[i];})
         .attr("class", "bar"+day)
+        .attr("id",function(d,i){return "rechthoek"+(i + day*8);})
         .attr("x", function(d,i) { return xScale(ShortNames[i]); })
         .attr("y", function(d,i) { return yScale(d) +10; })
         .attr("height", function(d) { return divHeight-30 - yScale(d); })
         .attr("width", xScale.rangeBand())
         .on("mouseover", function(d){return mouseHover(d3.select(this))})
         .on("mousemove", function(d,i){return showInfo(tooltip,data,i,(event.pageX+20),(event.pageY-45),values,percentages);})
-        .on("mouseout", function(){return mouseLeave(d3.select(this))
+        .on("mouseout", function(){return mouseLeave(d3.select(this))})
+        .on("click", function(d){return mouseClick(d3.select(this))
         });
 
 
@@ -465,16 +479,50 @@ function draw1Day(data, day, xdata){
         .attr("class", "dagBoekLine")
         .attr("d", line);
 
+    /*#f9c7a8
+#f39a9b
+#ec6e8d
+#d74a88
+#a93790
+#7b2397
+#5c1886
+#461266
+#300c46*/
+
+   // var colahs = ["#f9c7a8", "#f39a9b", "#ec6e8d", "#d74a88", "#a93790","#7b2397", "#5c1886", "#461266"];
+    function mouseClick(rechthoek){
+        var idea = +rechthoek.attr("id").slice(9,12);
+        while(idea>=8){
+            idea = idea-8;
+        }
+        var original = idea;
+        addToSelection(original);
+        highlightRechthoeken();
+        //var boolie = true;
+        //while(idea<150){
+        //
+        //        d3.select("#rechthoek"+idea).attr("fill", colahs[original]).attr('opacity',"1");
+        //        idea +=8;
+        //
+        //
+        //}
+
+    }
 
 
     function mouseHover(obj){
-        obj.attr("fill","#68A8E5");
+        if(obj.attr("fill") == "lightblue"){
+            obj.attr("fill","#68A8E5");
+        }
+
         tooltip.style("visibility", "visible")
             .style("width","150px")
             .style("height","80px");
     }
     function mouseLeave(obj){
-        obj.attr("fill","lightblue");
+        if(obj.attr("fill") == "#68A8E5") {
+            obj.attr("fill", "lightblue");
+        }
         tooltip.style("visibility", "hidden");
     }
     //d3.selectAll(".chart").selectAll("*").style("opacity", "0.5");
@@ -493,6 +541,38 @@ function draw1Day(data, day, xdata){
 
 
 }
+
+function addToSelection(numb){
+    if($.inArray(numb,selection)==-1){
+        selection.push(numb);
+
+    }else{
+        var index = selection.indexOf(numb);
+        selection.splice(index, 1);
+    }
+}
+
+function highlightRechthoeken(){
+    if(selection.length==0){
+        for(i=0;i<n*8;i++){
+            d3.select("#rechthoek"+i).attr("opacity","1");
+        }
+    }else if(selection.length==8){
+        selection = [];
+        highlightRechthoeken();
+    }else{
+        for(i=0;i<n*8;i++){
+            d3.select("#rechthoek"+i).attr("opacity","0.5");
+        }
+        for(i=0;i<selection.length;i++){
+            for(k=selection[i];k<n*8;k+=8){
+                d3.select("#rechthoek"+k).attr("opacity","1");
+            }
+        }
+    }
+
+}
+
 var n = 0;
 function drawTotalDiary(data){
 
@@ -599,7 +679,8 @@ function resetDiary(){
 
         d3.selectAll(".brush").each(function(d){ d3.select(this).call(y[d].brush.clear());y[d].brush.on("brush").call(this) ;});
 
-
+    selection=[];
+    highlightRechthoeken();
 
 
 
@@ -712,7 +793,7 @@ function mouseHoverSport(obj){
         .style("height","auto");
 }
 function mouseLeaveSport(obj){
-    obj.attr("fill","lightblue");
+    obj.attr("fill","#d74a88");
     tooltip.style("visibility", "hidden");
 }
 function showInfoSport(tooltip, data, index, x, y,vals){
