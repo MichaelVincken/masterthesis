@@ -143,7 +143,17 @@ function drawParCoo(removalList,replacementList){
             .on("mouseover", function(d){return mouseHover(d3.select(this))})
             .on("mousemove", function(d,i){return showTableInfo(d,i,(event.pageX+20),(event.pageY-45));})
             .on("mouseout", function(){return mouseLeave(d3.select(this))})
-            .on("click", function(d){return mouseClick(d3.select(this))});
+            .on("click", function(d){return mouseClick(d3.select(this))})
+            .style("display",function(d,i){
+                var l = getTheDays();
+                for(k = 0;k< l.length;k++){
+                    var dag = document.getElementById("food"+k).data[0][0];
+                    if(parcoo2[i].Dag == dag){
+                        return null;
+                    }
+                }
+                return "none";
+            });
 
 
 
@@ -378,7 +388,7 @@ function drawParCoo(removalList,replacementList){
         }
 
         if(returnArray.length == 0){
-            return [-1];
+            return [];
         }
 
         return returnArray;
@@ -403,7 +413,7 @@ function toggleView3(){
         d3.select(".parcoordss").remove();
         drawParCoo(removedList,replacementList);
         d3.select(".parcoordss").style("visibility","visible").style("width","95%");
-        highLightDays([]);
+        highLightDays(getTheDays());
     }
 
 
@@ -413,6 +423,25 @@ function toggleView3(){
     //d3.select(".parcoordss").style("visibility",""+visString());
 
 }
+
+function getTheDays(){
+    var returnList = [];
+    for(i  =0 ;i<n;i++){
+
+
+
+        if(d3.select("#dag"+i).style("opacity") =="1"){
+            returnList.push(i);
+        }else{
+
+        }
+
+    }
+
+    return returnList;
+}
+
+
 function highLightDays(days){
     for(i  =0 ;i<n;i++){
 

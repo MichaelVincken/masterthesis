@@ -10,10 +10,16 @@
   <script type="text/javascript" src="resources/jqueryUI.js"></script>
   <script type="text/javascript" src="resources/jquery-csv.js"></script>
   <script type="text/javascript" src="resources/parcoords.js"></script>
+  <script type="text/javascript" src="resources/d3-dropdownmenu.js"></script>
 
   <script type="text/javascript" src="scripts/Dagboek2.js"></script>
   <script type="text/javascript" src="scripts/parcoosplitviewTotal.js"></script>
   <script type="text/javascript" src="scripts/parcoosplitviewMaaltijd.js"></script>
+  <script type="text/javascript" src="scripts/dropdownTest.js"></script>
+  <script type="text/javascript" src="scripts/filters.js"></script>
+
+
+
 
   <link href= "CssStyles/programStyle.css" rel = "stylesheet"/>
 
@@ -23,9 +29,9 @@
 
 <body>
 
-<div class="filters"><h2> Sorteer op:</h2>
-  <button type="button" onclick="resetDagboekSelectie(opmerkingenFilter)" class = "filter">&#x021F5 Opmerkingen</button>
-  <button type="button" onclick="resetDagboekSelectie(kcalfilter)" class = "filter"> &#x021F5 kcal</button>
+<div class="filters" ><h2> Sorteer op:</h2>
+  <div id="demo" class="dropdowndiv"></div>
+  <h2 id="gesorteerdHeader">Gesorteerd op:</h2>
   <button type="button" onclick="resetDiary()" class = "clearFilter">&#10060 Verwijder filters</button>
 
   <button type="button" onclick="toggleView3()" class = "display">&#x01F35D Maaltijden </button>
@@ -45,6 +51,8 @@
 
 <script>
 
+  //<button type="button" onclick="resetDagboekSelectie(opmerkingenFilter)" class = "filter">&#x021F5 Opmerkingen</button>
+  //<button type="button" onclick="resetDagboekSelectie(kcalfilter)" class = "filter"> &#x021F5 kcal</button>
   var dataArrayKcal = [3000,2500];
   var dataArrayKoolhydraten = [400,340];
   var dataArrayEiwitten = [80,60];
@@ -147,7 +155,7 @@ drawParCoo([],[]);
 
 
 
-
+dropIt();
 
 
 

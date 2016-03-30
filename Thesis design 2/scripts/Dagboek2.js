@@ -103,6 +103,9 @@ function getVerwijder(row, dialog,dia) {
         drawParCoo(removedList,replacementList);
         toggleView();
         currentPar=0;
+        dropSelection="Dagen";
+        dropIt();
+
     }
 }
 var replacementList = [];
@@ -137,6 +140,8 @@ function processInput(options,day,dialog,divX,row){
     drawParCoo(removedList,replacementList);
     toggleView();
 currentPar = 0;
+    dropSelection="Dagen";
+    dropIt();
 }
 
 function getAlternatief(row, dialog,dia,n) {
@@ -562,7 +567,7 @@ function highlightRechthoeken(){
         highlightRechthoeken();
     }else{
         for(i=0;i<n*8;i++){
-            d3.select("#rechthoek"+i).attr("opacity","0.5");
+            d3.select("#rechthoek"+i).attr("opacity","0.25");
         }
         for(i=0;i<selection.length;i++){
             for(k=selection[i];k<n*8;k+=8){
@@ -643,6 +648,26 @@ function opmerkingenFilter(){
         globalopmerkingenlist=opmerkingenlist;
     }
 }
+function Sportfilter(){
+    resetDagboekSelectie();
+    if(globalopmerkingenlist==0) {
+        var currentPosition = [];
+        var opmerkingenlist = [];
+        var legeLijst = [];
+        for (i = 0; i < n; i++) {
+
+            if (document.getElementById("sport" + i).innerHTML === "&nbsp;") {
+                legeLijst.push(i);
+            } else {
+                opmerkingenlist.push(i);
+            }
+        }
+        opmerkingenlist = opmerkingenlist.concat(legeLijst);
+
+        transitionDiary(opmerkingenlist);
+        globalopmerkingenlist=opmerkingenlist;
+    }
+}
 
 
 function transitionDiary (opmerkingenlist){
@@ -699,7 +724,8 @@ function resetDiary(){
 
     }
     globalopmerkingenlist=[];
-
+    dropSelection="Dagen";
+    dropIt();
 }
 
 function resetDagboekSelectie(inputs){
@@ -719,55 +745,10 @@ function resetDagboekSelectie(inputs){
 
     }
     globalopmerkingenlist=[];
-
+    dropIt();
 }
 
-function kcalfilter(){
 
-
-
-    if(globalopmerkingenlist.length==0) {
-        var totalIndexes = [];
-        for (i = 0; i < n; i++) {
-
-            var divX = document.getElementById("food" + i);
-
-            var total = getTotalkcal(divX.data);
-            totalIndexes.push([total, i]);
-
-        }
-
-        totalIndexes.sort(sortFunction);
-
-        function sortFunction(a, b) {
-            if (a[0] === b[0]  && a[1] >b[1]) {
-                return 1;
-            }
-            else {
-                return (a[0] >= b[0]) ? -1 : 1;
-            }
-        }
-
-        var opmerkingenlist = [];
-        totalIndexes.forEach(function (entry, i) {
-            opmerkingenlist.push(entry[1]);
-        })
-
-        transitionDiary(opmerkingenlist);
-        globalopmerkingenlist = opmerkingenlist;
-    }
-
-}
-function getTotalkcal(data){
-    var total =0;
-    var indexes = [];
-    data.forEach(function(entry,i){
-        total = total+parseFloat(entry[5]);
-
-    })
-    return total;
-
-}
 
 
 function showInfo(tooltip, data, index, x, y,vals,percentages){
@@ -815,4 +796,5 @@ function toggleView(){
     visiTotal = false;
     visiMaaltijd = false;
     d3.select(".parcoordss").style("visibility","hidden").style("width","0%");
+
 }
