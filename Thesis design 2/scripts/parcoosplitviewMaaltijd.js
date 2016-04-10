@@ -111,7 +111,7 @@ function drawParCoo(removalList,replacementList){
                     .rangePoints([h,0]);
             }
             else {(y[d] = d3.scale.linear()
-                .domain(d3.extent(parcoo, function(p) { return parseFloat(p[d]); }))
+                .domain([0,(d3.max(parcoo, function(p) { return parseFloat(p[d]); })+(d3.max(parcoo, function(p) { return parseFloat(p[d]); })/10))])
                 .range([h, 0]));
 
             }
