@@ -147,7 +147,7 @@ function drawParCoo(removalList,replacementList){
             .style("display",function(d,i){
                 var l = getTheDays();
                 for(k = 0;k< l.length;k++){
-                    var dag = document.getElementById("food"+k).data[0][0];
+                    var dag = document.getElementById("food"+l[k]).data[0][0];
                     if(parcoo2[i].Dag == dag){
                         return null;
                     }
