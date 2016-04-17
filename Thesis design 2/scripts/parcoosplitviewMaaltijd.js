@@ -204,18 +204,20 @@ function drawParCoo(removalList,replacementList){
 
 
         function mouseHover(obj){
-            obj.style("background-color","#68A8E5");
+            var colorOfLine = obj.style("stroke");
             tooltip.style("visibility", "visible")
                 .style("width","auto")
                 .style("height","200px");
-
+            foreground.style("stroke","white");
+            obj.style("background-color","#68A8E5");
+            obj.style("stroke",colorOfLine);
 
 
         }
         function mouseLeave(obj){
             obj.style("background-color","white");
             tooltip.style("visibility", "hidden");
-
+            foreground.style("stroke","#5c1886");
         }
         function showTableInfo(data, index, x,y){
 
