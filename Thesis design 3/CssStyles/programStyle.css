@@ -1,0 +1,420 @@
+*{
+	margin:0;
+	padding:0;
+	font-family:Arial;
+
+}
+h1{
+	background-color:#ededed;
+	color: grey;
+	text-align:center;
+}
+h2{
+
+
+	float:left;
+}
+.heading p{
+	color:grey;
+	background-color:#ededed;
+	text-align:right;
+}
+.filters{
+	float:left;
+	width:95%;
+	height:4%;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
+.filters button{
+	padding: 2px;
+	margin-top: 2px;
+	margin-left:5px;
+
+}
+.filler{
+	float:left;
+	width:69%;
+	height:4%;
+}
+html,body{
+	overflow:hidden;
+	height:98%;
+	width:99%;
+	background-color:white;
+	margin-left:0.5%;
+	margin-top:0.1%;
+	margin-bottom: 0.5%;
+	margin-right: 0.5%;
+
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+}
+
+.chart {
+	float:left;
+	width:100%;
+	height:95%;
+	border-top-width: 2px;
+	border-top-style: solid;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-color:black;
+
+
+
+}
+.daglijst {
+
+	padding:2px;
+	padding-bottom: 5px;
+	float:left;
+
+	margin-top:0.5%;
+
+	margin-right: 0.5%;
+	background-color : grey;
+	width: 13%;
+	height: 47%;
+
+}
+.dagchart{
+	background-color: white;
+	height:35%;
+	width:100%;
+
+}
+.dagsport{
+	background-color:#ededed;
+	border-width: 1px;
+	border-bottom-width:1px;
+	border-bottom-color:grey;
+	border-bottom-style: solid;
+	border-top-width:1px;
+	border-top-color:grey;
+	border-top-style: solid;
+	height:5%;
+	width:100%;
+	overflow:hidden;
+}
+.dagopmerking{
+	background-color:#ededed;
+	border-width: 1px;
+	border-bottom-width:1px;
+	border-bottom-color:grey;
+	border-bottom-style: solid;
+	height:5%;
+	width:100%;
+	overflow:hidden;
+}
+.dagfood{
+	background-color:white;
+	height:55%;
+	width:100%;
+
+}
+
+
+
+
+table#voedingsdagboek {
+    border-collapse: collapse;
+	width: 100%;
+}
+#voedingsdagboek td:first-child {
+    background-color: white;
+	width: 20px;
+}
+#voedingsdagboek tr {
+    background-color: white;
+    border-top: 1px solid #fff;
+}
+#voedingsdagboek tr:hover {
+
+}
+#voedingsdagboek td {
+    padding: 3px 5px;
+}
+#voedingsdagboek td:hover {
+    cursor: pointer;
+}
+
+#dialog-bck{
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0,0,0, 0.9);
+	z-index:5;
+}
+
+#dialog{
+  position: absolute;
+  box-sizing: border-box;
+  width: 400px;
+  height: 200px;
+  background-color: white;
+  border: 3px solid black;
+  top: calc(50% - 100px);
+  left: calc(50% - 200px);
+	z-index:5;
+}
+
+#drop-it{
+	position: absolute;
+	box-sizing: border-box;
+	width: 600px;
+	height: 400px;
+	background-color: white;
+	border: 3px solid black;
+	top: calc(50% - 200px);
+	left: calc(50% - 300px);
+	padding:25px;
+	z-index:5;
+
+}
+.selectClass{
+
+	display:inline-block;
+	vertical-align:top;
+	overflow:hidden;
+	width:100%;
+	height:100%;
+}
+.optionClass{
+	font-size: 20px;
+	width:100%;
+	height:30px;
+	border: 1px solid grey;
+	box-sizing:border-box;
+	text-align:center;
+
+}
+.optionClass:hover{
+	background-color:#A9A9F5;
+}
+
+.dialog-buttonrow{
+  position: absolute;
+  bottom: 0;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.textcontainer{
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.buttoncontainer{
+  box-sizing: border-box;
+  width: 50%;
+  float: left;
+  padding: 5px;
+}
+
+.buttoncontainer button{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px;
+  border: 0;
+  background-color: blue;
+  color: white; 
+}
+
+div.doel {
+    font-family: "Helvetica Neue", Georgia, Serif;
+    font-size: 16px;
+    background: none;
+}
+
+div.kcalbar	#xaxis .domain {
+		fill:none;
+		stroke:#000;
+	}
+
+div.kcalbar	#xaxis text, #yaxis text {
+		font-size: 10px;
+	}
+
+
+
+
+.doel input[type=submit]:hover {
+  background: #8DB600;
+	color:white;
+  cursor: pointer;
+}
+
+
+.kalenderFrom{
+	float:left;
+
+	width:50%;
+	height:100%;
+}
+.kalenderFrom p{
+	font-size: 15px;
+}
+.kalenderTo{
+	float:left;
+
+	width:50%;
+	height:100%;
+}
+.kalenderTo p{
+	font-size: 15px;
+}
+
+
+.tooltip{
+	border-width:2px;
+	border-style:solid;
+	border-color:black;
+	white-space:pre;
+	padding:10px;
+
+}
+
+svg {
+	font: 10px sans-serif;
+
+}
+
+.background path {
+	fill: none;
+	stroke: #ddd;
+	shape-rendering: crispEdges;
+}
+
+.foreground path {
+	fill: none;
+	stroke: blue;
+	stroke-width: 1.5;
+}
+
+.brush .extent {
+	fill-opacity: .3;
+	stroke: #fff;
+	shape-rendering: crispEdges;
+}
+
+.axis line,
+.axis path {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+.axis text {
+	text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+}
+
+.foreground path:hover {
+	fill: none;
+	stroke:blue;
+	stroke-opacity: .7;
+	stroke-width: 4;
+
+}
+.background path{
+	stroke:white;
+}
+
+.parcoordss{
+	padding-left: 50px;
+	padding-top: 50px;
+	float:left;
+
+	width:80%;
+	height:70%;
+
+}
+
+.parcoordSVG{
+	width:100%;
+	height:100%;
+}
+
+.display{
+
+	float:right;
+	//font-weight:bold;
+	width:150px;
+	height:30px;
+	font-size: 15px;
+}
+
+.clearFilter{
+
+	margin: 0px -50px;
+	position:relative;
+	width:150px;
+	height:30px;
+	left:5%;
+
+	font-size: 15px;
+
+}
+
+.filter{
+
+	float:left;
+	//font-weight:bold;
+	width:150px;
+	height:30px;
+	font-size: 15px;
+
+}
+
+.DAH{
+	fill: none;
+	stroke: green;
+	stroke-width: 3;
+}
+.DAH path:hover{
+	fill: none;
+	stroke: green;
+	stroke-opacity: .7;
+	stroke-width: 4;
+}
+
+.dagBoekLine{
+	fill: none;
+	stroke: green;
+	stroke-width: 1.5px;
+
+}
+
+.dropdowndiv{
+	margin-left:10px;
+	width:200px;
+	height:30px;
+	float:left;
+}
+#gesorteerdHeader{
+	width:350px;
+
+}
+#demo{
+	z-index:4;
+}
+
+
+
+
+
+
+
+
+
+
+
