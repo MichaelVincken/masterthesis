@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> T312 Visualization</title>
+
+  <script src= "http://d3js.org/d3.v3.min.js"></script>
+
+
+  <script type="text/javascript" src="resources/jqueryMin.js"></script>
+  <script type="text/javascript" src="resources/jqueryUI.js"></script>
+  <script type="text/javascript" src="resources/jquery-csv.js"></script>
+  <script type="text/javascript" src="resources/parcoords.js"></script>
+
+
+  <script type="text/javascript" src="scripts/snelkoppelingen.js"></script>
+  <script type="text/javascript" src="scripts/staafDiagrammen.js"></script>
+  <script type="text/javascript" src="scripts/eetLijst.js"></script>
+  <script type="text/javascript" src="scripts/doel.js"></script>
+  <script type="text/javascript" src="scripts/kcalbar.js"></script>
+  <script type="text/javascript" src="scripts/kalender.js"></script>
+  <script type="text/javascript" src="scripts/parallelCoord.js"></script>
+
+
+  <link href= "CssStyles/normalize.css" rel = "stylesheet"/>
+  <link href= "CssStyles/datepicker.css" rel = "stylesheet"/>
+  <link href= "CssStyles/programStyle.css" rel = "stylesheet"/>
+  <link href= "CssStyles/d3.parcoords.css" rel = "stylesheet"/>
+
+
+</head>
+
+<body>
+<div class="motherDiv">
+
+  <div class = "radio-voedingswaarden">
+    <form>
+      <input type="radio" onclick="selectAlgemeen();" id="voed1" name="voedingswaarde" value="0" checked>
+      <label for="voed1">Algemeen</label>
+      <br>
+      <input type="radio" onclick="selectVitamines();" id="voed2" name="voedingswaarde" value="1">
+      <label for="voed2">Vitamines</label>
+      <br>
+      <input type="radio" onclick="selectMineralen();" id="voed3" name="voedingswaarde" value="2">
+      <label for="voed3">Mineralen</label>
+    </form>
+  </div>
+
+  <div class= "staafdiagrammen" id="staaftest"></div>
+
+
+
+  <div class = "kalender" id="kalenderDiv">
+<div class = "kalenderFrom">
+  <p >Van:</p>
+
+</div>
+    <div class="kalenderTo"> <p >Tot en met:</p></div>
+
+  </div>
+  
+  <div class = "kcalbar" id="wrapper">
+
+    <script>
+      drawKCal();
+    </script>
+  </div>
+  
+</div>
+
+
+
+
+<div class = "eetlijst" style="overflow-y: auto" >
+
+</div>
+
+
+<div class = "doel" style="overflow-y: auto" align="center">
+        </br>
+       <h3>BMI Berekenen</h3>
+       <p>
+        <label>Voer uw lengte in: </label>
+        <input type="text" id="lengte" placeholder="Lengte in centimeter" />
+      </p>
+      <p>
+        <label>Voer uw gewicht in: </label>
+        <input type="text" id="gewicht" placeholder="Gewicht in kilogram" />
+      </p>
+      <p>
+      <input type="submit" value="BEREKENEN" onclick="berekenBMI();">
+      <p>Jouw BMI is: <span style="font-size:50px" id="resultaat"></span></p>
+      <p><span style="color:#8DB600" id="comment"></span> </p>
+      </p>
+
+</div>
+<script>
+
+  var dataArrayKcal = [3000,2500];
+  var dataArrayKoolhydraten = [400,340];
+  var dataArrayEiwitten = [80,60];
+  var dataArrayWater = [2500,3000];
+  var dataArraySuikers = [90,60];
+  var dataArrayVetten = [200,100];
+  var dataArrayCholesterol = [250,230];
+  var dataArrayVezels = [40,30];
+
+  var dataArrayVitA = [8,9];
+  var dataArrayVitB1 = [1.2,1.1];
+  var dataArrayVitB2 = [3.0,1.5];
+  var dataArrayVitB6 = [4.0,1.5];
+  var dataArrayVitB11 = [400,300];
+  var dataArrayVitB12 = [3.0,2.8];
+  var dataArrayVitC = [50,75];
+  var dataArrayVitD = [7,10];
+
+  var dataArrayNatrium = [3,6];
+  var dataArrayKalium = [4000,3500];
+  var dataArrayCalcium = [1050,1000];
+  var dataArrayFosfor = [550,600];
+  var dataArrayIjzer = [5,9];
+  var dataArrayMagnesium = [500,350];
+  var dataArrayKoper= [1.0,0.9];
+  var dataArrayZink = [11,9];
+
+
+
+
+  drawParCoord();
+
+
+  drawOriginalBarChart();
+
+  var data = (function() {
+    var data = null;
+    $.ajax({
+      'async': false,
+      'global': false,
+      'url': "resources/testCSV.csv",
+      'dataType': "text",
+      'success': function (csvd) {
+        data = $.csv.toArrays(csvd);
+       console.log(data);
+      }
+    });
+    return data;
+  })();
+ console.log(data);
+  makeEetLijst(data);
+
+  //		<img src="data:image/png;base64,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" alt="Back" onclick="backFunction()">
+  //<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+// <link href= "normalize.css" rel = "stylesheet"/>
+ // <link href= "datepicker.css" rel = "stylesheet"/>
+
+  /* var canvas2 =d3.select("#staaftest")
+   .append("svg")
+   .attr("width","100%")
+   .attr("height", "100%")
+   .attr("fill", "pink");
+
+   canvas2.append("rect")
+   .attr("x","10")
+   .attr("y", "30")
+   .attr("width","100%")
+   .attr("height","100%")
+   .attr("fill","blue");
+
+
+
+
+
+   var rect =canvas.append("rect")
+   .attr("x",function (){return d3.select("svg").node().getBoundingClientRect().width - 100})
+   .attr("y", "20")
+   .attr("width","100%")
+   .attr("height","100%")
+   .attr("fill","pink");
+
+
+
+
+   <div class = "snelkoppelingen">
+   <div>
+   <img src="img/home.png" alt="Home" onclick="homeFunction()">
+   <img src="img/clear-filters.png" alt="Clear Filters" onclick="filterFunction()">
+   </div>
+   </div>
+
+
+
+
+
+   */
+
+
+testResize();
+
+
+  //d3.select("body").node().getBoundingClientRect().width
+
+  //selection.node().getBBox()
+
+
+  window.addEventListener('resize', function(event){
+    location.reload();
+  });
+
+</script>
+
+</body>
+</html>
